@@ -1,0 +1,24 @@
+<%= form_for([@user,@decision,@alternative]) do |f| %>
+  <% if @alternative.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@alternative.errors.count, "error") %> prohibited this alternative from being saved:</h2>
+
+      <ul>
+      <% @alternative.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+
+  <%= hidden_field(:alternative, :decision_id, value: @decision.id) %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

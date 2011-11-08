@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @factor.name %>
+</p>
+
+<p>
+  <b>Decision:</b>
+  <%= @factor.decision %>
+</p>
+
+
+<%= link_to 'Edit', edit_factor_path(@factor) %> |
+<%= link_to 'Back', factors_path %>
