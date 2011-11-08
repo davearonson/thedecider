@@ -1,4 +1,6 @@
 Thedecider::Application.routes.draw do
+  resources :users
+
   get "home/welcome"
 
   # The priority is based upon order of creation:
