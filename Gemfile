@@ -34,3 +34,21 @@ group :test do
   # Pretty printed test output
   gem 'turn', :require => false
 end
+
+gem 'devise'
+
+group :development do
+  gem 'rspec-rails', '2.6.1'
+end
+
+group :test do
+  # Pretty printed test output
+  gem 'turn', :require => false
+  gem 'rspec-rails', '2.6.1'
+  gem 'webrat', '0.7.1'
+end
+
+group :production do
+  # for heroku
+  gem 'pg'
+end
