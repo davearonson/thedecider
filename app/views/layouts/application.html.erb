@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Thedecider</title>
+  <title><%=title%></title>
   <%= stylesheet_link_tag    "application" %>
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
+  <%= render "devise/menu/make_or_edit_registration_links" %> | <%= render "devise/menu/log_in_or_out_links" %>
+  <h1><%=title%></h1>
+  <p class="notice"><%= notice %></p>
+  <p class="alert"><%= alert %></p>
 
 <%= yield %>
 
