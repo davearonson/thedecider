@@ -21,7 +21,7 @@
       <%= collection_select(:decision, :user_id, User.all, :id, :username) %>
     </div>
   <% else %>
-    <%= hidden_field(:decision, :user_id) %>
+    <%= hidden_field(:decision, :user_id, value: @user.id) %>
   <% end %>
   <div class="actions">
     <%= f.submit %>

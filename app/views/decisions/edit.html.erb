@@ -2,4 +2,34 @@
 
 <%= render 'form' %>
 
-<%= link_to 'Back to List', user_decisions_path(@user) %>
+<h3>Alternatives:</h3>
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+<% @decision.alternatives.each do |alt| %>
+  <tr>
+    <td><%= alt.name %></td>
+    <td><%= link_to 'Show', user_decision_alternative_path(@user, @decision, alt) %></td>
+    <td><%= link_to 'Edit', edit_user_decision_alternative_path(@user, @decision, alt) %></td>
+    <td><%= link_to 'Destroy', user_decision_alternative_path(@user, @decision, alt), confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'New Alternative', new_user_decision_alternative_path(@user,@decision) %>
+
+<h3>Factors: (NOT YET IMPLEMENTED)</h3>
+<!--
+<ul>
+<% @decision.factors.each do |factor| %>
+  <li><%= factor.name %>
+<% end %>
+</ul>
+<%= link_to 'New Factor', new_user_decision_factor_path(@user,@decision) %>
+-->
+
+<p><%= link_to 'Back to Decision List', user_decisions_path(@user) %></p>

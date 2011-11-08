@@ -10,5 +10,19 @@
   </p>
 <% end %>
 
+<p>Alternatives:</p>
+<ul>
+<% @decision.alternatives.each do |alt| %>
+  <li><%= alt.name %>
+<% end %>
+</ul>
+
+<p>Factors:</p>
+<ul>
+<% @decision.factors.each do |factor| %>
+  <li><%= factor.name %>
+<% end %>
+</ul>
+
 <%= link_to 'Edit', edit_user_decision_path(@user, @decision) %> |
 <%= link_to 'Back', user_decisions_path(@user) %>
