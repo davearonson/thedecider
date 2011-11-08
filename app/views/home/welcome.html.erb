@@ -1,2 +1,7 @@
-<h1>Home#welcome</h1>
-<p>Find me in app/views/home/welcome.html.erb</p>
+<h1>Welcome <%= @user ? @user.username : "Visitor" %>!</h1>
+<% if @user %>
+  <p><%= link_to 'Your Decisions', user_decisions_path(@user) %></p>
+  <% if @user.is_admin? %>
+    <p><%= link_to 'Everybody\'s Decisions', user_decisions_path(@user) %></p>
+  <% end %>
+<% end %>

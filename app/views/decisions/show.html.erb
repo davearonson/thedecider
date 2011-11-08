@@ -1,0 +1,14 @@
+<p>
+  <b>Name:</b>
+  <%= @decision.name %>
+</p>
+
+<% if @show_all %>
+  <p>
+    <b>User:</b>
+    <%= @decision.user.username %>
+  </p>
+<% end %>
+
+<%= link_to 'Edit', edit_user_decision_path(@user, @decision) %> |
+<%= link_to 'Back', user_decisions_path(@user) %>
