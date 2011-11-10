@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   def welcome
-    @user = user_signed_in? ? current_user : nil
+    @title = "Welcome #{ @user ? @user.username : "Visitor" }!"
   end
-
 end

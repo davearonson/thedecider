@@ -2,12 +2,10 @@ Thedecider::Application.routes.draw do
 
   devise_for :users
 
-  resources :users do
-    resources :decisions do
-      resources :alternatives
-      resources :factors
-    end
-  end
+  resources :alternatives
+  resources :decisions
+  resources :factors
+  resources :users
 
   get "home/welcome"
 

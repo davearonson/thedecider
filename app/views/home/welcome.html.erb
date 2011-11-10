@@ -1,7 +1,5 @@
-<h1>Welcome <%= @user ? @user.username : "Visitor" %>!</h1>
+<p>Some descriptive text will eventually go here.</p>
+
 <% if @user %>
-  <p><%= link_to 'Your Decisions', user_decisions_path(@user) %></p>
-  <% if @user.is_admin? %>
-    <p><%= link_to 'Everybody\'s Decisions', user_decisions_path(@user) %></p>
-  <% end %>
+  <p><%= link_to 'Decisions, Decisions', decisions_path %></p>
 <% end %>

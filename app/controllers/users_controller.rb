@@ -1,12 +1,17 @@
 class UsersController < ApplicationController
+
   # GET /users
   # GET /users.json
   def index
     @users = User.all
 
     respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @users }
+      if @user.is_admin?
+        format.html # index.html.erb
+        format.json { render json: @users }
+      else
+        format.html { redirect_to root_path, notice: no_peeking }
+      end
     end
   end
 
@@ -14,6 +19,7 @@ class UsersController < ApplicationController
   # GET /users/1.json
   def show
     @user = User.find(params[:id])
+    check_access @user
 
     respond_to do |format|
       format.html # show.html.erb
@@ -25,6 +31,7 @@ class UsersController < ApplicationController
   # GET /users/new.json
   def new
     @user = User.new
+    check_access @user
 
     respond_to do |format|
       format.html # new.html.erb
@@ -35,12 +42,14 @@ class UsersController < ApplicationController
   # GET /users/1/edit
   def edit
     @user = User.find(params[:id])
+    check_access @user
   end
 
   # POST /users
   # POST /users.json
   def create
     @user = User.new(params[:user])
+    check_access @user
 
     respond_to do |format|
       if @user.save
@@ -57,6 +66,7 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
+    check_access @user
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
@@ -73,6 +83,7 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user = User.find(params[:id])
+    check_access @user
     @user.destroy
 
     respond_to do |format|

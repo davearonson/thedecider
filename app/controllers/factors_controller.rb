@@ -1,31 +1,13 @@
 class FactorsController < ApplicationController
-  # GET /factors
-  # GET /factors.json
-  def index
-    @factors = Factor.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @factors }
-    end
-  end
-
-  # GET /factors/1
-  # GET /factors/1.json
-  def show
-    @factor = Factor.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @factor }
-    end
-  end
+  before_filter :get_factor, except: [ :new, :create ]
 
   # GET /factors/new
   # GET /factors/new.json
   def new
     @factor = Factor.new
-
+    @factor.decision_id = @decision.id
+    return if ! can_access Decision.find @factor.decision_id
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @factor }
@@ -41,10 +23,11 @@ class FactorsController < ApplicationController
   # POST /factors.json
   def create
     @factor = Factor.new(params[:factor])
-
+    return if ! can_access @factor
     respond_to do |format|
       if @factor.save
-        format.html { redirect_to @factor, notice: 'Factor was successfully created.' }
+        format.html { redirect_to edit_decision_path @factor.decision,
+                                  notice: 'Factor was successfully created.' }
         format.json { render json: @factor, status: :created, location: @factor }
       else
         format.html { render action: "new" }
@@ -56,11 +39,10 @@ class FactorsController < ApplicationController
   # PUT /factors/1
   # PUT /factors/1.json
   def update
-    @factor = Factor.find(params[:id])
-
     respond_to do |format|
       if @factor.update_attributes(params[:factor])
-        format.html { redirect_to @factor, notice: 'Factor was successfully updated.' }
+        format.html { redirect_to edit_decision_path @factor.decision,
+                                  notice: 'Factor was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
@@ -72,12 +54,25 @@ class FactorsController < ApplicationController
   # DELETE /factors/1
   # DELETE /factors/1.json
   def destroy
-    @factor = Factor.find(params[:id])
     @factor.destroy
 
     respond_to do |format|
-      format.html { redirect_to factors_url }
+      format.html { redirect_to edit_decision_path @factor.decision }
       format.json { head :ok }
     end
   end
+
+  ##############################
+  ##                          ##
+  ##  PRIVATE METHODS BELOW!  ##
+  ##                          ##
+  ##############################
+
+  private
+
+  def get_factor
+    @factor = Factor.find params[:id]
+    @factor = nil if ! can_access @factor
+  end
+
 end

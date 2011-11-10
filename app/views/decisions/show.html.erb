@@ -24,5 +24,7 @@
 <% end %>
 </ul>
 
-<%= link_to 'Edit', edit_user_decision_path(@user, @decision) %> |
-<%= link_to 'Back', user_decisions_path(@user) %>
+<%= link_to 'Edit', edit_decision_path(@decision) %> |
+<%= link_to 'Back to User', @decision.user %>
+
+<p>NOTE: This feature is under construction and will eventually be a spreadsheet.</p>

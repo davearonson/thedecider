@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111108210130) do
+ActiveRecord::Schema.define(:version => 20111110014526) do
 
   create_table "alternatives", :force => true do |t|
     t.string   "name"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(:version => 20111108210130) do
     t.integer  "decision_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "weight_id"
   end
 
   add_index "factors", ["decision_id"], :name => "index_factors_on_decision_id"

@@ -8,22 +8,20 @@
     <% end %>
     <th></th>
     <th></th>
-    <th></th>
   </tr>
 
 <% @decisions.each do |decision| %>
   <tr>
-    <td><%= decision.name %></td>
+    <td><%= link_to decision.name, decision_path(decision) %></td>
     <% if @show_all %>
       <td><%= decision.user ? decision.user.username : "ERROR: NO USER" %></td>
     <% end %>
-    <td><%= link_to 'Show', user_decision_path(@user, decision) %></td>
-    <td><%= link_to 'Edit', edit_user_decision_path(@user, decision) %></td>
-    <td><%= link_to 'Destroy', user_decision_path(@user, decision), confirm: 'Are you sure?', method: :delete %></td>
+    <td><%= link_to 'Edit', edit_decision_path(decision) %></td>
+    <td><%= link_to 'Destroy', decision_path(decision), confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Decision', new_user_decision_path(@user) %>
+<%= link_to 'New Decision', new_decision_path %>

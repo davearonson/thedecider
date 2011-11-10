@@ -13,4 +13,8 @@ class User < ActiveRecord::Base
   def is_admin?
     result = username == 'dave'
   end
+
+  def user_id
+    id
+  end
 end
