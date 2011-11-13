@@ -80,6 +80,10 @@ class DecisionsController < ApplicationController
 
   # GET /decisions/1/edit
   def edit
+    @alternative = Alternative.new
+    @alternative.decision_id = @decision.id
+    @factor = Factor.new
+    @factor.decision_id = @decision.id
   end
 
   # POST /decisions
