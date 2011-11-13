@@ -1,13 +1,13 @@
 class Level
 
   # ruby has no enums :-(
-  Very_Low  = 0
-  Low       = 1
-  Semi_Low  = 2
-  Medium    = 3
-  Semi_High = 4
-  High      = 5
-  Very_High = 6
+  Very_Low  = 1
+  Low       = 2
+  Semi_Low  = 3
+  Medium    = 4
+  Semi_High = 5
+  High      = 6
+  Very_High = 7
 
   Count     = 7
 
@@ -23,6 +23,7 @@ class Level
   end
 
   @@list = [];
+  new 0        , "ERROR!",    "black"
   new Very_Low , "Very Low",  "red"
   new Low      , "Low",       "light red"
   new Semi_Low , "Semi-Low",  "orange"

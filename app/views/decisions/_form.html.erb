@@ -75,7 +75,7 @@
   <% @decision.factors.each do |fac| %>
     <tr>
       <td><%= link_to fac.name, edit_factor_path(fac) %></td>
-      <td><%= Level.getLevels[fac.weight_id].name %></td>
+      <td><%= Level.getLevels[fac.weight].name %></td>
       <td><%= link_to 'Remove', factor_path(fac), method: :delete %></td>
     </tr>
   <% end %>
@@ -94,8 +94,8 @@
 
     <%= f.text_field :name %>
     </td>
-    <td><%= collection_select(:factor, :weight_id, Level.getLevels, :id, :name) %></td>
-    <td><%= f.submit "Add Alternative" %>
+    <td><%= collection_select(:factor, :weight, Level.getLevels, :id, :name) %></td>
+    <td><%= f.submit "Add Factor" %>
 
     <%= hidden_field(:factor, :decision_id, value: @decision.id) %>
     </td>

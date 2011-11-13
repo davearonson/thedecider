@@ -5,6 +5,7 @@ Thedecider::Application.routes.draw do
   resources :alternatives
   resources :decisions
   resources :factors
+  resources :rankings
   resources :users
 
   get "home/welcome"

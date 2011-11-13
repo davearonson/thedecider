@@ -1,5 +1,5 @@
 class DecisionsController < ApplicationController
-  before_filter :get_user
+
   before_filter :get_decision, except: [ :index, :new, :create ]
 
   # GET /decisions
@@ -16,7 +16,31 @@ class DecisionsController < ApplicationController
   # GET /decisions/1
   # GET /decisions/1.json
   def show
-    return if ! get_decision
+    @max = 0
+    tmp_ranks = Ranking.where(factor_id: @decision.factors.map(&:id)).
+                        where(alternative_id: @decision.alternatives.map(&:id))
+    @rankings = {}
+    @points = Hash.new 0
+    @decision.factors.each do |fac|
+      @max += fac.weight
+      @decision.alternatives.each do |alt|
+        rank = tmp_ranks.find { |r|
+          r.alternative_id == alt.id && r.factor_id == fac.id
+        }
+        if ! rank
+          rank = Ranking.new
+          rank.alternative_id = alt.id
+          rank.factor_id = fac
+          rank.weight_id = Level::Medium
+          rank.save!
+        end
+        @rankings[[alt.id,fac.id]] = rank
+        @points[alt.id] += rank.weight * fac.weight
+      end
+    end
+    @max *= Level::Count
+    @percents = Hash.new 0
+    @points.map { |key, val| @percents[key] = val * 100.0 / @max }
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @decision }
@@ -28,8 +52,6 @@ class DecisionsController < ApplicationController
   def new
     @decision = Decision.new
     @decision.user_id = current_user.id
-    @alternative = Alternative.new
-    @factor = Factor.new
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @decision }
@@ -38,9 +60,6 @@ class DecisionsController < ApplicationController
 
   # GET /decisions/1/edit
   def edit
-    get_decision
-    @alternative = Alternative.new
-    @factor = Factor.new
   end
 
   # POST /decisions
@@ -61,7 +80,6 @@ class DecisionsController < ApplicationController
   # PUT /decisions/1
   # PUT /decisions/1.json
   def update
-    get_decision
     respond_to do |format|
       if @decision.update_attributes(params[:decision])
         format.html { redirect_to edit_decision_path @decision, notice: 'Decision was successfully updated.' }
@@ -76,7 +94,6 @@ class DecisionsController < ApplicationController
   # DELETE /decisions/1
   # DELETE /decisions/1.json
   def destroy
-    get_decision
     @decision.destroy
     respond_to do |format|
       format.html { redirect_to decisions_path }
@@ -97,6 +114,9 @@ class DecisionsController < ApplicationController
   def get_decision
     @decision = Decision.find params[:id]
     @decision = nil if ! can_access @decision
+    # since they are on the edit form
+    @alternative = Alternative.new
+    @factor = Factor.new
   end
 
 end

@@ -1,30 +1,40 @@
-<p>
-  <b>Name:</b>
-  <%= @decision.name %>
-</p>
+<h2 align="center"><%= @decision.name %></h2>
 
-<% if @show_all %>
-  <p>
-    <b>User:</b>
-    <%= @decision.user.username %>
-  </p>
-<% end %>
+<table align="center" border="1">
+  <tr>
+    <td></td>
+    <% @decision.alternatives.each do |alt| %>
+      <td><b><%= alt.name %></b></td>
+    <% end %>
+  </tr>
+  <% @decision.factors.each do |fac| %>
+    <tr>
+      <td>
+        <b><%= "#{fac.name} (#{Level.getLevels[fac.weight].name})" %></b>
+      </td>
+    <% @decision.alternatives.each do |alt| %>
+      <td>
+        <% rank = @rankings[[alt.id,fac.id]] %>
+        <%= form_for rank do |f| %>
+          <%= collection_select(:ranking, :weight_id, Level.getLevels, :id, :name,
+                                selected: rank.weight) %>
+        <% end %>
+      </td>
+    <% end %>
+  <% end %>
+  <tr>
+    <td><b>SCORES:</b></td>
+    <% @decision.alternatives.each do |alt| %>
+      <td>
+        <%= number_to_percentage @percents[alt.id], precision: 0 %>
+        <%= " (#{@points[alt.id]}) / #{@max}" %>
+      </td>
+    <% end %>
+  </tr>
+</table>
 
-<p>Alternatives:</p>
-<ul>
-<% @decision.alternatives.each do |alt| %>
-  <li><%= alt.name %>
-<% end %>
-</ul>
-
-<p>Factors:</p>
-<ul>
-<% @decision.factors.each do |factor| %>
-  <li><%= factor.name %>
-<% end %>
-</ul>
 
 <%= link_to 'Edit', edit_decision_path(@decision) %> |
-<%= link_to 'Back to User', @decision.user %>
+<%= link_to 'Back to Decisions', decisions_path %>
 
 <p>NOTE: This feature is under construction and will eventually be a spreadsheet.</p>

@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
+
   has_many :decisions
+
+  validates_presence_of :name
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable, :lockable, :timeoutable and :omniauthable
@@ -17,4 +20,5 @@ class User < ActiveRecord::Base
   def user_id
     id
   end
+
 end

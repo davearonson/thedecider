@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111110014526) do
+ActiveRecord::Schema.define(:version => 20111113042003) do
 
   create_table "alternatives", :force => true do |t|
     t.string   "name"
@@ -40,6 +40,17 @@ ActiveRecord::Schema.define(:version => 20111110014526) do
   end
 
   add_index "factors", ["decision_id"], :name => "index_factors_on_decision_id"
+
+  create_table "rankings", :force => true do |t|
+    t.integer  "alternative_id"
+    t.integer  "factor_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "weight_id"
+  end
+
+  add_index "rankings", ["alternative_id"], :name => "index_rankings_on_alternative_id"
+  add_index "rankings", ["factor_id"], :name => "index_rankings_on_factor_id"
 
   create_table "users", :force => true do |t|
     t.string   "username"
