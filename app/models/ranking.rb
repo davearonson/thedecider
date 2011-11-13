@@ -1,5 +1,7 @@
 class Ranking < ActiveRecord::Base
 
+  belongs_to :alternative
+
   def user_id
     alternative.decision.user_id
   end
