@@ -50,7 +50,7 @@ class Level
     new(Medium   , 'yellow'),
     new(Semi_High, 'lime'),
     new(High     , 'lightgreen'),
-    new(Very_High, 'springgreen')
+    new(Very_High, 'forestgreen')
   ]
 
   @@GoodNames = [
