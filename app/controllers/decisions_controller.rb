@@ -72,6 +72,7 @@ class DecisionsController < ApplicationController
   def new
     @decision = Decision.new
     @decision.user_id = current_user.id
+    make_subparts
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @decision }
@@ -80,10 +81,7 @@ class DecisionsController < ApplicationController
 
   # GET /decisions/1/edit
   def edit
-    @alternative = Alternative.new
-    @alternative.decision_id = @decision.id
-    @factor = Factor.new
-    @factor.decision_id = @decision.id
+    make_subparts
   end
 
   # POST /decisions
@@ -138,9 +136,14 @@ class DecisionsController < ApplicationController
   def get_decision
     @decision = Decision.find params[:id]
     @decision = nil if ! can_access @decision
-    # since they are on the edit form
+  end
+
+  # since they are on the new/edit form we need them if we're creating or editing
+  def make_subparts
     @alternative = Alternative.new
+    @alternative.decision_id = @decision.id
     @factor = Factor.new
+    @factor.decision_id = @decision.id
   end
 
 end

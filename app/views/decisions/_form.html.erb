@@ -7,7 +7,7 @@
         <div id="error_explanation">
           <h2><%= pluralize(@decision.errors.count, "error") %>
           prohibited this decision from being saved:</h2>
-    
+
           <ul>
           <% @decision.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>
@@ -15,7 +15,7 @@
           </ul>
         </div>
       <% end %>
-    
+
       <div class="field">
         <%= f.label :name %><br />
         <%= f.text_field :name %>
@@ -35,15 +35,14 @@
         <%= f.submit %>
       </div>
     <% end %>
-  
+
   </td></tr>
 
   <tr valign="top">
     <td>
-  
+
       <h3>Alternatives:</h3>
-      
-      <%= form_for @alternative do |f| %>
+
       <table>
         <% @decision.alternatives.each do |alt| %>
           <tr>
@@ -53,38 +52,40 @@
             </td>
           </tr>
         <% end %>
-      
-        <tr><td>
-          <% if @alternative.errors.any? %>
-            <div id="error_explanation">
-              <h2><%= pluralize(@alternative.errors.count, "error") %>
-              prohibited this alternative from being saved:</h2>
-      
-              <ul>
-              <% @alternative.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-              </ul>
-            </div>
-          <% end %>
-      
-          <%= f.text_field :name %>
-          </td>
-          <td><%= f.submit "Add Alternative" %>
-      
-          <%= hidden_field(:alternative, :decision_id, value: @decision.id) %>
-          </td>
-          </tr>
-      
+
+        <% puts "\n\n\nalt = #{@alternative}\n\n\n" %>
+
+        <%= form_for @alternative do |f| %>
+          <tr><td>
+            <% if @alternative.errors.any? %>
+              <div id="error_explanation">
+                <h2><%= pluralize(@alternative.errors.count, "error") %>
+                prohibited this alternative from being saved:</h2>
+
+                <ul>
+                <% @alternative.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+                <% end %>
+                </ul>
+              </div>
+            <% end %>
+
+            <%= f.text_field :name %>
+            </td>
+            <td><%= f.submit "Add Alternative" %>
+
+            <%= hidden_field(:alternative, :decision_id, value: @decision.id) %>
+            </td>
+            </tr>
+
+        <% end %>
       </table>
-      <% end %>
-  
+
     </td>
     <td>
-  
+
       <h3>Factors:</h3>
-      
-      <%= form_for @factor do |f| %>
+
       <table>
         <tr align="left"><th>Name</th><th>Weight</th></tr>
         <% @decision.factors.each do |fac| %>
@@ -94,33 +95,35 @@
             <td><%= link_to 'Remove', factor_path(fac), method: :delete %></td>
           </tr>
         <% end %>
-      
-        <tr><td>
-          <% if @factor.errors.any? %>
-            <div id="error_explanation">
-              <h2><%= pluralize(@factor.errors.count, "error") %>
-              prohibited this factor from being saved:</h2>
-              <ul>
-              <% @factor.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
+
+        <tr>
+          <%= form_for @factor do |f| %>
+            <td>
+              <% if @factor.errors.any? %>
+                <div id="error_explanation">
+                  <h2><%= pluralize(@factor.errors.count, "error") %>
+                  prohibited this factor from being saved:</h2>
+                  <ul>
+                  <% @factor.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                  <% end %>
+                  </ul>
+                </div>
               <% end %>
-              </ul>
-            </div>
+    
+              <%= f.text_field :name %>
+            </td>
+            <td><%= collection_select(:factor, :weight_id,
+                                      Level.weightNames, :id, :name) %></td>
+            <td>
+              <%= f.submit "Add Factor" %>
+              <%= hidden_field(:factor, :decision_id, value: @decision.id) %>
+            </td>
           <% end %>
-      
-          <%= f.text_field :name %>
-          </td>
-          <td><%= collection_select(:factor, :weight_id,
-                                    Level.weightNames, :id, :name) %></td>
-          <td><%= f.submit "Add Factor" %>
-      
-          <%= hidden_field(:factor, :decision_id, value: @decision.id) %>
-          </td>
-          </tr>
-      
+        </tr>
+
       </table>
-      <% end %>
-  
+
     </td>
   </tr>
 </table>
