@@ -21,4 +21,9 @@ class User < ActiveRecord::Base
     id
   end
 
+  # keep devise happy :-P
+  def name
+    username
+  end
+
 end
