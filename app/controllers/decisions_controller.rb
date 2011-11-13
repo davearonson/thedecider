@@ -30,7 +30,7 @@ class DecisionsController < ApplicationController
         if ! rank
           rank = Ranking.new
           rank.alternative_id = alt.id
-          rank.factor_id = fac
+          rank.factor_id = fac.id
           rank.weight_id = Level::Medium
           rank.save!
         end
