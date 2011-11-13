@@ -1,117 +1,126 @@
-<table align="center" border="1"><tr><td align="center" colspan="2">
-<%= form_for @decision do |f| %>
-  <% if @decision.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@decision.errors.count, "error") %> prohibited this decision from being saved:</h2>
+<table align="center" border="1">
 
-      <ul>
-      <% @decision.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
+  <tr><td align="center" colspan="2">
+
+    <%= form_for @decision do |f| %>
+      <% if @decision.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@decision.errors.count, "error") %>
+          prohibited this decision from being saved:</h2>
+    
+          <ul>
+          <% @decision.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
+    
+      <div class="field">
+        <%= f.label :name %><br />
+        <%= f.text_field :name %>
+      </div>
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-  <% if @show_all %>
-    <div class="field">
-      <%= f.label :user %><br />
-      <%= collection_select(:decision, :user_id, User.all, :id, :username) %>
-    </div>
-  <% else %>
-    <%= hidden_field(:decision, :user_id, value: @user.id) %>
-  <% end %>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+      <% if @show_all %>
+        <div class="field">
+          <%= f.label :user %><br />
+          <%= collection_select(:decision, :user_id,
+                                User.all, :id, :username) %>
+        </div>
+      <% else %>
+        <%= hidden_field(:decision, :user_id, value: @user.id) %>
+      <% end %>
 
-</td></tr><tr valign="top"><td>
-
-<h3>Alternatives:</h3>
-
-<%= form_for @alternative do |f| %>
-<table>
-  <% @decision.alternatives.each do |alt| %>
-    <tr>
-      <td><%= link_to alt.name, edit_alternative_path(alt) %></td>
-      <td><%= link_to 'Remove', alternative_path(alt), method: :delete %></td>
-    </tr>
-  <% end %>
-
-  <tr><td>
-    <% if @alternative.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@alternative.errors.count, "error") %> prohibited this alternative from being saved:</h2>
-
-        <ul>
-        <% @alternative.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-        </ul>
+      <div class="actions">
+        <%= f.submit %>
       </div>
     <% end %>
+  
+  </td></tr>
 
-    <%= f.text_field :name %>
-    </td>
-    <td><%= f.submit "Add Alternative" %>
-
-    <%= hidden_field(:alternative, :decision_id, value: @decision.id) %>
-    </td>
-    </tr>
-
-</table>
-<% end %>
-
-</td><td>
-
-<h3>Factors:</h3>
-
-<%= form_for @factor do |f| %>
-<table>
-  <% @decision.factors.each do |fac| %>
-    <tr>
-      <td><%= link_to fac.name, edit_factor_path(fac) %></td>
-      <td><%= Level.getLevels[fac.weight].name %></td>
-      <td><%= link_to 'Remove', factor_path(fac), method: :delete %></td>
-    </tr>
-  <% end %>
-
-  <tr><td>
-    <% if @factor.errors.any? %>
-      <div id="error_explanation">
-        <h2><%= pluralize(@factor.errors.count, "error") %> prohibited this factor from being saved:</h2>
-        <ul>
-        <% @factor.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
+  <tr valign="top">
+    <td>
+  
+      <h3>Alternatives:</h3>
+      
+      <%= form_for @alternative do |f| %>
+      <table>
+        <% @decision.alternatives.each do |alt| %>
+          <tr>
+            <td><%= link_to alt.name, edit_alternative_path(alt) %></td>
+            <td>
+              <%= link_to 'Remove', alternative_path(alt), method: :delete %>
+            </td>
+          </tr>
         <% end %>
-        </ul>
-      </div>
-    <% end %>
-
-    <%= f.text_field :name %>
+      
+        <tr><td>
+          <% if @alternative.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@alternative.errors.count, "error") %>
+              prohibited this alternative from being saved:</h2>
+      
+              <ul>
+              <% @alternative.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+      
+          <%= f.text_field :name %>
+          </td>
+          <td><%= f.submit "Add Alternative" %>
+      
+          <%= hidden_field(:alternative, :decision_id, value: @decision.id) %>
+          </td>
+          </tr>
+      
+      </table>
+      <% end %>
+  
     </td>
-    <td><%= collection_select(:factor, :weight, Level.getLevels, :id, :name) %></td>
-    <td><%= f.submit "Add Factor" %>
-
-    <%= hidden_field(:factor, :decision_id, value: @decision.id) %>
+    <td>
+  
+      <h3>Factors:</h3>
+      
+      <%= form_for @factor do |f| %>
+      <table>
+        <tr align="left"><th>Name</th><th>Weight</th></tr>
+        <% @decision.factors.each do |fac| %>
+          <tr>
+            <td><%= link_to fac.name, edit_factor_path(fac) %></td>
+            <td><%= Level.weightNames[fac.weight_id-1].name %></td>
+            <td><%= link_to 'Remove', factor_path(fac), method: :delete %></td>
+          </tr>
+        <% end %>
+      
+        <tr><td>
+          <% if @factor.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@factor.errors.count, "error") %>
+              prohibited this factor from being saved:</h2>
+              <ul>
+              <% @factor.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+      
+          <%= f.text_field :name %>
+          </td>
+          <td><%= collection_select(:factor, :weight_id,
+                                    Level.weightNames, :id, :name) %></td>
+          <td><%= f.submit "Add Factor" %>
+      
+          <%= hidden_field(:factor, :decision_id, value: @decision.id) %>
+          </td>
+          </tr>
+      
+      </table>
+      <% end %>
+  
     </td>
-    </tr>
-
+  </tr>
 </table>
-<% end %>
-
-<!--
-<ul>
-<% @decision.factors.each do |factor| %>
-  <li><%= factor.name %>
-<% end %>
-</ul>
-<%# TODO: how do we link the new Factor back to this Decision? %>
-<%= link_to 'New Factor', new_factor_path %>
--->
-
-</td></tr>

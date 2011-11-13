@@ -1,40 +1,48 @@
-<h2 align="center"><%= @decision.name %></h2>
+<div align="center">
 
-<table align="center" border="1">
+<h2><%= @decision.name %></h2>
+
+<table align="center" border="1" width="50%">
   <tr>
     <td></td>
-    <% @decision.alternatives.each do |alt| %>
-      <td><b><%= alt.name %></b></td>
+    <% @alternatives.each do |alt| %>
+      <td width="<%= 100 / (@alternatives.length + 1) %>%"
+          bgcolor="<%= @colors[alt.id]%>" >
+        <b><%= alt.name %></b>
+      </td>
     <% end %>
   </tr>
   <% @decision.factors.each do |fac| %>
     <tr>
       <td>
-        <b><%= "#{fac.name} (#{Level.getLevels[fac.weight].name})" %></b>
+        <b><%= fac.name %></b><br/>
+        (<%= @weightNames[fac.id].name %>)
       </td>
-    <% @decision.alternatives.each do |alt| %>
-      <td>
-        <% rank = @rankings[[alt.id,fac.id]] %>
+    <% @alternatives.each do |alt| %>
+      <% rank = @rankings[[alt.id,fac.id]] %>
+      <td bgcolor="<%= Level.goodColors[rank.weight - 1].name %>">
         <%= form_for rank do |f| %>
-          <%= collection_select(:ranking, :weight_id, Level.getLevels, :id, :name,
-                                selected: rank.weight) %>
+          <%= collection_select(:ranking, :weight_id,
+                                Level.goodNames, :id, :name,
+                                { selected: rank.weight },
+                                { onChange: "submit()" } ) %>
         <% end %>
       </td>
     <% end %>
   <% end %>
   <tr>
     <td><b>SCORES:</b></td>
-    <% @decision.alternatives.each do |alt| %>
-      <td>
-        <%= number_to_percentage @percents[alt.id], precision: 0 %>
-        <%= " (#{@points[alt.id]}) / #{@max}" %>
+    <% @alternatives.each do |alt| %>
+      <td bgcolor="<%= @colors[alt.id]%>">
+        <b><big><%= Level.goodNames[@scores[alt.id]].name %></big></b><br/>
+        (<%= number_to_percentage @percents[alt.id], precision: 0 %>)
       </td>
     <% end %>
   </tr>
 </table>
 
 
-<%= link_to 'Edit', edit_decision_path(@decision) %> |
+<%= link_to 'Edit Name/Factors/Alternatives', edit_decision_path(@decision) %> |
 <%= link_to 'Back to Decisions', decisions_path %>
 
-<p>NOTE: This feature is under construction and will eventually be a spreadsheet.</p>
+</div>

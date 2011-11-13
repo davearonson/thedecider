@@ -16,13 +16,16 @@ class DecisionsController < ApplicationController
   # GET /decisions/1
   # GET /decisions/1.json
   def show
-    @max = 0
+    max = 0
     tmp_ranks = Ranking.where(factor_id: @decision.factors.map(&:id)).
                         where(alternative_id: @decision.alternatives.map(&:id))
     @rankings = {}
-    @points = Hash.new 0
+    @colors = {}
+    points = Hash.new 0
+    @weightNames = {}
     @decision.factors.each do |fac|
-      @max += fac.weight
+      @weightNames[fac.id] = Level::weightNames[fac.weight_id-1]
+      max += fac.weight
       @decision.alternatives.each do |alt|
         rank = tmp_ranks.find { |r|
           r.alternative_id == alt.id && r.factor_id == fac.id
@@ -35,12 +38,29 @@ class DecisionsController < ApplicationController
           rank.save!
         end
         @rankings[[alt.id,fac.id]] = rank
-        @points[alt.id] += rank.weight * fac.weight
+        points[alt.id] += rank.weight * fac.weight
       end
     end
-    @max *= Level::Count
+    minPts,maxPts = points.minmax_by { |key,val| val }
+    minPts = minPts[1]
+    maxPts = maxPts[1] 
+    ptsPerLevel = (maxPts - minPts) / (Level::Count - 1.0)
+    @scores = {}
+    @decision.alternatives.each do |alt|
+      if minPts == maxPts
+        level = Level::Count - 1
+      else
+        ptsAboveMin = points[alt.id] - minPts
+        level = ptsAboveMin / ptsPerLevel
+        puts "\n\n\n#{alt.id} rates #{level}"
+      end
+      @scores[alt.id] = level
+      @colors[alt.id] = Level.goodColors[level].name
+    end
+    max *= Level::Count
     @percents = Hash.new 0
-    @points.map { |key, val| @percents[key] = val * 100.0 / @max }
+    points.map { |key, val| @percents[key] = val * 100.0 / max }
+    @alternatives = @decision.alternatives.sort_by!{ |alt| -points[alt.id] }
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @decision }

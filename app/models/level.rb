@@ -11,24 +11,66 @@ class Level
 
   Count     = 7
 
-  attr_reader :id, :name, :color
+  attr_reader :id, :name
 
-  def initialize id, name, color
-    @id, @name, @color = id, name, color
-    @@list[id] = self
+  def initialize id, name
+    @id, @name = id, name
   end
 
-  def self.getLevels
-    @@list.clone
+  def self.badNames
+    return @@BadNames.clone
   end
 
-  @@list = [];
-  new 0        , "ERROR!",    "black"
-  new Very_Low , "Very Low",  "red"
-  new Low      , "Low",       "light red"
-  new Semi_Low , "Semi-Low",  "orange"
-  new Medium   , "Medium",    "yellow"
-  new Semi_High, "Semi-High", "lime"
-  new High     , "High",      "light green"
-  new Very_High, "Very High", "green"
+  def self.goodColors
+    return @@GoodColors.clone
+  end
+
+  def self.goodNames
+    return @@GoodNames.clone
+  end
+
+  def self.weightNames
+    return @@WeightNames.clone
+  end
+
+  @@BadNames = [
+    new(Very_Low , 'Very_Good'),
+    new(Low      , 'Good'),
+    new(Semi_Low , 'Semi_Good'),
+    new(Medium   , 'Medium'),
+    new(Semi_High, 'Semi_Bad'),
+    new(High     , 'Bad'),
+    new(Very_High, 'Very_Bad')
+  ]
+
+  @@GoodColors = [
+    new(Very_Low , 'red'),
+    new(Low      , 'orangered'),
+    new(Semi_Low , 'orange'),
+    new(Medium   , 'yellow'),
+    new(Semi_High, 'lime'),
+    new(High     , 'lightgreen'),
+    new(Very_High, 'springgreen')
+  ]
+
+  @@GoodNames = [
+    new(Very_Low , 'Very_Bad'),
+    new(Low      , 'Bad'),
+    new(Semi_Low , 'Semi_Bad'),
+    new(Medium   , 'Medium'),
+    new(Semi_High, 'Semi_Good'),
+    new(High     , 'Good'),
+    new(Very_High, 'Very_Good')
+  ]
+
+  @@WeightNames = [
+    new(Very_Low , 'Very_Low'),
+    new(Low      , 'Low'),
+    new(Semi_Low , 'Semi_Low'),
+    new(Medium   , 'Medium'),
+    new(Semi_High, 'Semi_High'),
+    new(High     , 'High'),
+    new(Very_High, 'Very_High')
+  ]
+
 end
