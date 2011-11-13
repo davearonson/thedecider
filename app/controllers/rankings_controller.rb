@@ -7,7 +7,7 @@ class RankingsController < ApplicationController
   def update
     respond_to do |format|
       if @ranking.update_attributes(params[:ranking])
-        format.html { redirect_to decision_path @ranking.factor.decision, notice: 'Ranking was successfully updated.' }
+        format.html { redirect_to decision_path @ranking.alternative.decision, notice: 'Ranking was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
