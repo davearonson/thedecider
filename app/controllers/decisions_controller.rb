@@ -20,7 +20,6 @@ class DecisionsController < ApplicationController
     tmp_ranks = Ranking.where(factor_id: @decision.factors.map(&:id)).
                         where(alternative_id: @decision.alternatives.map(&:id))
     @rankings = {}
-    @colors = {}
     points = Hash.new 0
     @weightNames = {}
     @decision.factors.each do |fac|
@@ -41,26 +40,28 @@ class DecisionsController < ApplicationController
         points[alt.id] += rank.weight * fac.weight
       end
     end
-    minPts,maxPts = points.minmax_by { |key,val| val }
-    minPts = minPts[1]
-    maxPts = maxPts[1] 
-    ptsPerLevel = (maxPts - minPts) / (Level::Count - 1.0)
-    @scores = {}
-    @decision.alternatives.each do |alt|
-      if minPts == maxPts
-        level = Level::Count - 1
-      else
-        ptsAboveMin = points[alt.id] - minPts
-        level = ptsAboveMin / ptsPerLevel
-        puts "\n\n\n#{alt.id} rates #{level}"
-      end
-      @scores[alt.id] = level
-      @colors[alt.id] = Level.goodColors[level].name
-    end
     max *= Level::Count
+
+    @scores = {}
     @percents = Hash.new 0
-    points.map { |key, val| @percents[key] = val * 100.0 / max }
-    @alternatives = @decision.alternatives.sort_by!{ |alt| -points[alt.id] }
+    ptsPerLevel = (max + 1.0) / Level::Count
+    if points.length > 0
+      puts "\n\n\npoints = #{points}; max = #{max}; /level = #{ptsPerLevel}\n\n"
+      @decision.alternatives.each do |alt|
+        level = (points[alt.id] / ptsPerLevel).to_i
+        @scores[alt.id] = level
+        puts " #{alt.id} scores #{@scores[alt.id]} points, level #{level}"
+      end
+      points.map { |key, val| @percents[key] = val * 100.0 / max }
+    else
+      @decision.alternatives.map do |alt|
+        @percents[alt.id] = 0
+        @scores[alt.id] = Level::Medium
+      end
+    end
+    @alternative = Alternative.new
+    @factor = Factor.new
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @decision }

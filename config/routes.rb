@@ -1,12 +1,26 @@
 Thedecider::Application.routes.draw do
 
   devise_for :users
+  resources :users
+
+  # was originally:
+  # resources :decisions do
+  #   resources :alternatives do
+  #     resources :rankings
+  #   end
+  #   resources :factors
+  # end
+  # resources :users
+  # but the assorted "shortcut" url generator calls were getting very long,
+  # and i had to specify a boatload of objects, up the chain, like:
+  #   <%= link_to "rank it", new_decision_alternative_ranking_path (
+  #                          @decision, @alternative)
+  # could probably make a class method to build it....
 
   resources :alternatives
   resources :decisions
   resources :factors
   resources :rankings
-  resources :users
 
   get "home/welcome"
 
