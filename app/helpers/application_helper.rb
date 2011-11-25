@@ -6,7 +6,7 @@ module ApplicationHelper
     else
       respond_to do |format|
         format.html { redirect_to root_path,
-                      notice: 'No peeking at other people\'s stuff!' }
+                      notice: "No peeking at other people's stuff!" }
       end
       false
     end
