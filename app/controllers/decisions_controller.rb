@@ -7,6 +7,7 @@ class DecisionsController < ApplicationController
   def index
     @show_all = @user.is_admin?
     @decisions = @show_all ? Decision.all : current_user.decisions
+    @title = "#{@user.is_admin? ? 'Everybody' : @user.username}'s Decisions"
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @decisions }
@@ -16,6 +17,7 @@ class DecisionsController < ApplicationController
   # GET /decisions/1
   # GET /decisions/1.json
   def show
+    @title = @decision.name
     max = 0
     tmp_ranks = Ranking.where(factor_id: @decision.factors.map(&:id)).
                         where(alternative_id: @decision.alternatives.map(&:id))
@@ -91,7 +93,7 @@ class DecisionsController < ApplicationController
     @decision = Decision.new(params[:decision])
     respond_to do |format|
       if @decision.save
-        format.html { redirect_to edit_decision_path @decision, notice: 'Decision was successfully created.' }
+        format.html { redirect_to decision_path @decision, notice: 'Decision was successfully created.' }
         format.json { render json: @decision, status: :created, location: @decision }
       else
         format.html { render action: "new" }
@@ -105,7 +107,7 @@ class DecisionsController < ApplicationController
   def update
     respond_to do |format|
       if @decision.update_attributes(params[:decision])
-        format.html { redirect_to edit_decision_path @decision, notice: 'Decision was successfully updated.' }
+        format.html { redirect_to decision_path @decision, notice: 'Decision was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }

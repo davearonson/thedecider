@@ -1,5 +1,3 @@
-<h1>Listing decisions</h1>
-
 <table>
   <tr>
     <th>Name</th>
@@ -16,7 +14,6 @@
     <% if @show_all %>
       <td><%= decision.user ? decision.user.username : "ERROR: NO USER" %></td>
     <% end %>
-    <td><%= link_to 'Edit', edit_decision_path(decision) %></td>
     <td><%= link_to 'Destroy', decision_path(decision), confirm: 'Are you sure?', method: :delete %></td>
   </tr>
 <% end %>

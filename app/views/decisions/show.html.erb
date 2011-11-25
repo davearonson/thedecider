@@ -1,9 +1,12 @@
 
 <% sorted_alts = @decision.alternatives.sort_by { |alt| -@percents[alt.id] } %>
 <% sorted_facts = @decision.factors.sort_by { |fact| -fact.weight } %>
-<div align="center">
 
-<h2><%= @decision.name %></h2>
+
+<% # we already got the decision name in the title %>
+<% if @user.is_admin? && @decision.user_id != @user.id %>
+  <h3>(from <%= @decision.user.username %>)</h3>
+<% end %>
 
 <table align="center" border="1">
   <tr valign="top">
@@ -132,5 +135,3 @@
 
 
 <%= link_to 'Back to Decisions', decisions_path %>
-
-</div>
