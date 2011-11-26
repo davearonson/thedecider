@@ -2,7 +2,7 @@ class Alternative < ActiveRecord::Base
 
   belongs_to :decision
 
-  has_many :rankings
+  has_many :rankings, :dependent => :destroy
 
   validates_presence_of :name
 
