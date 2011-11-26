@@ -17,7 +17,7 @@ module ApplicationHelper
   end
 
   def title
-    base_title = "thedecider"
+    base_title = "The Decider"
     if @title.nil?
       base_title
     else

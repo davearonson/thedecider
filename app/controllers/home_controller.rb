@@ -1,5 +1,10 @@
 class HomeController < ApplicationController
   def welcome
-    @title = "Welcome #{ @user ? @user.username : "Visitor" }!"
+    if current_user
+      respond_to do |format|
+        format.html { redirect_to decisions_path }
+      end
+    end
+    @title = 'Welcome Visitor'
   end
 end

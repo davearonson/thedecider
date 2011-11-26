@@ -1,15 +1,30 @@
-<p>Did you think that George W. Bush was The Decider?</p>
+<div style="margin:20px;text-align:left">
 
-<p>No, THIS is The Decider!</p>
+  <%= image_tag 'decisionpoints_pb.jpg', align: :left, hspace: '20px' %>
 
-<p>The Decider helps you make rational decisions, based on how the options rate
-in various aspects, and how important those aspects are to you.</p>
+  <p>Did you think that George W. Bush was The Decider?</p>
 
-<p>This is a very rough prototype.  The UI has not been polished at all, and I
-am still tweaking the workflow.  The main change I have in mind is to have just
-a single master Update button on a Decision's screen, plus let you rename it
-from there.</p>
+  <p>No, THIS is The Decider!</p>
 
-<% if @user %>
-  <p><%= link_to 'My Decisions', decisions_path %></p>
-<% end %>
+  <p>The Decider helps you make rational decisions, based on how the options
+  rate in various aspects, and how important those aspects are to you.</p>
+
+  <p>This is a very rough prototype.  The UI has not been polished at all, and
+  I am still tweaking the workflow.  The main change I have in mind is to have
+  just a single master Update button on a Decision's screen, plus let you
+  rename it from there.</p>
+
+  <p>Other planned features include:</p>
+  <ul>
+    <li>Following people (need not be bidirectional)</li>
+    <li>Friending people (must be bidirectional)</li>
+    <li>Making selected decisions visible to your friends, your followers, other members, or even non-members</li>
+    <li>Copying someone else's decision to your account so you can play with it</li>
+    <li>Feel free to suggest more!</li>
+  </ul>
+
+  <% if @user %>
+    <p><%= link_to 'My Decisions', decisions_path %></p>
+  <% end %>
+
+</div>
