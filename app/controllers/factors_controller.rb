@@ -26,7 +26,7 @@ class FactorsController < ApplicationController
     return if ! can_access @factor
     respond_to do |format|
       if @factor.save
-        format.html { redirect_to decision_path @factor.decision,
+        format.html { redirect_to @factor.decision,
                                   notice: 'Factor was successfully created.' }
         format.json { render json: @factor, status: :created, location: @factor }
       else
@@ -41,7 +41,7 @@ class FactorsController < ApplicationController
   def update
     respond_to do |format|
       if @factor.update_attributes(params[:factor])
-        format.html { redirect_to decision_path @factor.decision,
+        format.html { redirect_to @factor.decision,
                                   notice: 'Factor was successfully updated.' }
         format.json { head :ok }
       else
@@ -57,7 +57,8 @@ class FactorsController < ApplicationController
     @factor.destroy
 
     respond_to do |format|
-      format.html { redirect_to decision_path @factor.decision }
+      format.html { redirect_to @factor.decision,
+                    notice: 'Factor was successfully removed.' }
       format.json { head :ok }
     end
   end

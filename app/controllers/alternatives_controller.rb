@@ -25,7 +25,7 @@ class AlternativesController < ApplicationController
     return if ! can_access @alternative
     respond_to do |format|
       if @alternative.save
-        format.html { redirect_to decision_path @alternative.decision,
+        format.html { redirect_to @alternative.decision,
                                   notice: 'Alternative was successfully created.' }
         format.json { render json: @alternative, status: :created, location: @alternative }
       else
@@ -40,7 +40,7 @@ class AlternativesController < ApplicationController
   def update
     respond_to do |format|
       if @alternative.update_attributes(params[:alternative])
-        format.html { redirect_to decision_path @alternative.decision,
+        format.html { redirect_to @alternative.decision,
                                   notice: 'Alternative was successfully updated.' }
         format.json { head :ok }
       else
@@ -56,8 +56,8 @@ class AlternativesController < ApplicationController
     @alternative.destroy
 
     respond_to do |format|
-      format.html { redirect_to decision_path @alternative.decision,
-                                notice: "#{@alternative.name} has been destroyed" }
+      format.html { redirect_to @alternative.decision,
+                    notice: "Alternative was successfully removed." }
       format.json { head :ok }
     end
   end

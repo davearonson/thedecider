@@ -48,11 +48,9 @@ class DecisionsController < ApplicationController
     @percents = Hash.new 0
     ptsPerLevel = (max + 1.0) / Level::Count
     if points.length > 0
-      puts "\n\n\npoints = #{points}; max = #{max}; /level = #{ptsPerLevel}\n\n"
       @decision.alternatives.each do |alt|
         level = (points[alt.id] / ptsPerLevel).to_i
         @scores[alt.id] = level
-        puts " #{alt.id} scores #{@scores[alt.id]} points, level #{level}"
       end
       points.map { |key, val| @percents[key] = val * 100.0 / max }
     else
@@ -93,7 +91,8 @@ class DecisionsController < ApplicationController
     @decision = Decision.new(params[:decision])
     respond_to do |format|
       if @decision.save
-        format.html { redirect_to decision_path @decision, notice: 'Decision was successfully created.' }
+        format.html { redirect_to @decision,
+                                  notice: 'Decision was successfully created.' }
         format.json { render json: @decision, status: :created, location: @decision }
       else
         format.html { render action: "new" }
@@ -107,7 +106,8 @@ class DecisionsController < ApplicationController
   def update
     respond_to do |format|
       if @decision.update_attributes(params[:decision])
-        format.html { redirect_to decision_path @decision, notice: 'Decision was successfully updated.' }
+        format.html { redirect_to @decision,
+                                  notice: 'Decision was successfully updated.' }
         format.json { head :ok }
       else
         format.html { render action: "edit" }
