@@ -1,7 +1,7 @@
 <h1>Editing alternative</h1>
 
-<%= link_to 'Destroy', alternative_path(@alternative), confirm: 'Are you sure?', method: :delete %>
+<%= link_to 'Destroy', @alternative, confirm: 'Are you sure?', method: :delete %>
 
 <%= render 'form' %>
 
-<%= link_to 'Back to Decision', edit_decision_path(@alternative.decision) %>
+<%= link_to 'Back to Decision', @alternative.decision %>

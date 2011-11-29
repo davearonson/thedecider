@@ -22,6 +22,8 @@
                           Level.weightNames, :id, :name) %>
   </div>
 
+  <%= hidden_field(:factor, :decision_id, value: @factor.decision_id) %>
+
   <div class="actions">
     <%= f.submit %>
   </div>

@@ -4,7 +4,9 @@ class Factor < ActiveRecord::Base
 
   has_many :rankings, :dependent => :destroy
 
-  validates_presence_of :name
+  validates :name, :length => { :minimum => 2, :maximum => 20 },
+            :presence => true
+            # :uniqueness => true -- NOT YET, NEED TO SCOPE W/IN DECISION!
 
   def user_id
     decision.user_id

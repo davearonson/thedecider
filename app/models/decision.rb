@@ -5,6 +5,8 @@ class Decision < ActiveRecord::Base
   has_many :alternatives, :dependent => :destroy
   has_many :factors, :dependent => :destroy
 
-  validates_presence_of :name
+  validates :name, :length => { :minimum => 2, :maximum => 20 },
+            :presence => true,
+            :uniqueness => true
 
 end

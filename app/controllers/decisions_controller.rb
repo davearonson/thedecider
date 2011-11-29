@@ -8,6 +8,7 @@ class DecisionsController < ApplicationController
     @show_all = @user.is_admin?
     @decisions = @show_all ? Decision.all : current_user.decisions
     @title = "#{@user.is_admin? ? 'Everybody' : @user.username}'s Decisions"
+    @decision = Decision.new  # for the form, just in case
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @decisions }
@@ -25,6 +26,7 @@ class DecisionsController < ApplicationController
     points = Hash.new 0
     @weightNames = {}
     @decision.factors.each do |fac|
+      fac.weight_id = Level::Medium if ! fac.weight_id
       @weightNames[fac.id] = Level::weightNames[fac.weight_id-1]
       max += fac.weight
       @decision.alternatives.each do |alt|
@@ -92,11 +94,12 @@ class DecisionsController < ApplicationController
     respond_to do |format|
       if @decision.save
         format.html { redirect_to @decision,
-                                  notice: 'Decision was successfully created.' }
+                      notice: 'Decision was successfully created.' }
         format.json { render json: @decision, status: :created, location: @decision }
       else
         format.html { render action: "new" }
-        format.json { render json: @decision.errors, status: :unprocessable_entity }
+        format.json { render json: @decision.errors,
+                      status: :unprocessable_entity }
       end
     end
   end
@@ -110,7 +113,7 @@ class DecisionsController < ApplicationController
                                   notice: 'Decision was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "edit" }
+        format.html { render action: "show" }
         format.json { render json: @decision.errors, status: :unprocessable_entity }
       end
     end
@@ -121,7 +124,8 @@ class DecisionsController < ApplicationController
   def destroy
     @decision.destroy
     respond_to do |format|
-      format.html { redirect_to decisions_path }
+      format.html { redirect_to decisions_path,
+                    notice: 'Decision was successfully destroyed.' }
       format.json { head :ok }
     end
   end
