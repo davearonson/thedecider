@@ -10,7 +10,7 @@ class UsersController < ApplicationController
         format.html # index.html.erb
         format.json { render json: @users }
       else
-        format.html { redirect_to(root_path),
+        format.html { redirect_to root_path,
                       notice: "No peeking at other people's stuff!" }
       end
     end
@@ -72,7 +72,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to(@user),
+        format.html { redirect_to @user,
                       notice: 'User was successfully updated.' }
         format.json { head :ok }
       else
