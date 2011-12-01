@@ -22,9 +22,8 @@ class AlternativesController < ApplicationController
   # POST /alternatives.json
   def create
     @alternative = Alternative.new(params[:alternative])
-    return if ! can_access @alternative
     respond_to do |format|
-      if @alternative.save
+      if @alternative && can_access(@alternative) && @alternative.save
         format.html { redirect_to @alternative.decision,
                                   notice: 'Alternative was successfully created.' }
         format.json { render json: @alternative, status: :created, location: @alternative }

@@ -113,7 +113,7 @@ class DecisionsController < ApplicationController
                                   notice: 'Decision was successfully updated.' }
         format.json { head :ok }
       else
-        format.html { render action: "show" }
+        format.html { render action: "edit" }
         format.json { render json: @decision.errors, status: :unprocessable_entity }
       end
     end

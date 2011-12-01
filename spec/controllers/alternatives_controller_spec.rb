@@ -2,6 +2,46 @@ require 'spec_helper'
 
 describe AlternativesController do
 
+  # TODO: make the below stuff into fixtures?
+
+  valid_user_attributes = {
+    username: 'dave',  # so it will be an admin
+    password: 'testing',
+    realname: 'Fester Bestertester',
+    email: 'fester@bestertester.org'
+  }
+
+  User.create valid_user_attributes
+  @user = User.find_by_username valid_user_attributes[:username]
+
+  valid_login_attributes = {
+    username: valid_user_attributes[:username],
+    password: valid_user_attributes[:password],
+  }
+
+  valid_decision_attributes = {
+    name: 'what name to use',
+    user_id: @user.id
+  }
+
+  Decision.create valid_decision_attributes
+  @decision = Decision.find_by_name valid_decision_attributes[:name]
+
+  valid_alternative_attributes = {
+    name: 'blargh',
+    decision_id: @decision.id
+  }
+  valid_attributes = valid_alternative_attributes
+
+  Alternative.create valid_alternative_attributes
+  @alternative = Alternative.find_by_name valid_alternative_attributes[:name]
+
+  before :each do
+    @user = User.find_by_username valid_user_attributes[:username]
+    sign_in @user
+  end
+
+
   describe "GET edit" do
     it "assigns the requested alternative as @alternative" do
       alternative = Alternative.create! valid_attributes
@@ -24,9 +64,9 @@ describe AlternativesController do
         assigns(:alternative).should be_persisted
       end
 
-      it "redirects to the created alternative" do
+      it "redirects to the created alternative's decision" do
         post :create, :alternative => valid_attributes
-        response.should redirect_to(Alternative.last)
+        response.should redirect_to(Decision.find valid_attributes[:decision_id])
       end
     end
 
@@ -65,10 +105,10 @@ describe AlternativesController do
         assigns(:alternative).should eq(alternative)
       end
 
-      it "redirects to the alternative" do
+      it "redirects to the decision" do
         alternative = Alternative.create! valid_attributes
         put :update, :id => alternative.id, :alternative => valid_attributes
-        response.should redirect_to(alternative)
+        response.should redirect_to(alternative.decision)
       end
     end
 
@@ -99,10 +139,10 @@ describe AlternativesController do
       }.to change(Alternative, :count).by(-1)
     end
 
-    it "redirects to the alternatives list" do
+    it "redirects to the decision" do
       alternative = Alternative.create! valid_attributes
       delete :destroy, :id => alternative.id.to_s
-      response.should redirect_to(alternatives_url)
+      response.should redirect_to(alternative.decision)
     end
   end
 

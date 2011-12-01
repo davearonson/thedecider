@@ -2,12 +2,45 @@ require 'spec_helper'
 
 describe DecisionsController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Decision. As you add validations to Decision, be sure to
-  # update the return value of this method accordingly.
+  @incrementor = 0
+
+  # TODO: make the below stuff into fixtures?
+
+  valid_user_attributes = {
+    username: 'dave',  # so it will be an admin so we don't have security hassles
+    password: 'testing',
+    realname: 'Fester Bestertester',
+    email: 'fester@bestertester.org'
+  }
+
+  User.create valid_user_attributes
+  @user = User.find_by_username valid_user_attributes[:username]
+
+  valid_login_attributes = {
+    username: valid_user_attributes[:username],
+    password: valid_user_attributes[:password],
+  }
+
+  valid_decision_attributes = {
+    name: 'what name to use',
+    user_id: @user.id
+  }
+
   def valid_attributes
-    {}
+    {
+      name: 'decision ' + @incrementor.to_s,
+      user_id: @user.id
+    }
   end
+
+
+  before :each do
+    @user = User.find_by_username valid_user_attributes[:username]
+    sign_in @user
+    @incrementor = @incrementor ? @incrementor + 1 : 0
+  end
+
+
 
   describe "GET new" do
     it "assigns a new decision as @decision" do

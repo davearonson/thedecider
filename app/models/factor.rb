@@ -9,7 +9,7 @@ class Factor < ActiveRecord::Base
             # :uniqueness => true -- NOT YET, NEED TO SCOPE W/IN DECISION!
 
   def user_id
-    decision.user_id
+    decision ? decision.user_id : nil
   end
 
   def weight

@@ -10,7 +10,7 @@ class Alternative < ActiveRecord::Base
 
 
   def user_id
-    decision.user_id
+    decision ? decision.user_id : nil
   end
 
 end

@@ -6,7 +6,7 @@ class FactorsController < ApplicationController
   # GET /factors/new.json
   def new
     @factor = Factor.new
-    @factor.decision_id = @decision.id
+    @factor.decision_id = params[:decision_id]
     return if ! can_access Decision.find @factor.decision_id
     respond_to do |format|
       format.html # new.html.erb
@@ -23,9 +23,8 @@ class FactorsController < ApplicationController
   # POST /factors.json
   def create
     @factor = Factor.new(params[:factor])
-    return if ! can_access @factor
     respond_to do |format|
-      if @factor.save
+      if @factor && can_access(@factor) && @factor.save
         format.html { redirect_to @factor.decision,
                                   notice: 'Factor was successfully created.' }
         format.json { render json: @factor, status: :created, location: @factor }

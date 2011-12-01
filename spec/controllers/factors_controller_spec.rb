@@ -20,34 +20,44 @@ require 'spec_helper'
 
 describe FactorsController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Factor. As you add validations to Factor, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
-  end
+  # TODO: make the below stuff into fixtures?
 
-  describe "GET index" do
-    it "assigns all factors as @factors" do
-      factor = Factor.create! valid_attributes
-      get :index
-      assigns(:factors).should eq([factor])
-    end
-  end
+  valid_user_attributes = {
+    username: 'dave',  # so it will be an admin
+    password: 'testing',
+    realname: 'Fester Bestertester',
+    email: 'fester@bestertester.org'
+  }
 
-  describe "GET show" do
-    it "assigns the requested factor as @factor" do
-      factor = Factor.create! valid_attributes
-      get :show, :id => factor.id.to_s
-      assigns(:factor).should eq(factor)
-    end
-  end
+  User.create valid_user_attributes
+  @user = User.find_by_username valid_user_attributes[:username]
 
-  describe "GET new" do
-    it "assigns a new factor as @factor" do
-      get :new
-      assigns(:factor).should be_a_new(Factor)
-    end
+  valid_login_attributes = {
+    username: valid_user_attributes[:username],
+    password: valid_user_attributes[:password],
+  }
+
+  valid_decision_attributes = {
+    name: 'what name to use',
+    user_id: @user.id
+  }
+
+  Decision.create valid_decision_attributes
+  @decision = Decision.find_by_name valid_decision_attributes[:name]
+
+  valid_factor_attributes = {
+    name: 'blargh',
+    weight_id: Level::Medium,
+    decision_id: @decision.id
+  }
+  valid_attributes = valid_factor_attributes
+
+  Factor.create valid_factor_attributes
+  @factor = Factor.find_by_name valid_factor_attributes[:name]
+
+  before :each do
+    @user = User.find_by_username valid_user_attributes[:username]
+    sign_in @user
   end
 
   describe "GET edit" do
@@ -72,9 +82,9 @@ describe FactorsController do
         assigns(:factor).should be_persisted
       end
 
-      it "redirects to the created factor" do
+      it "redirects to the decision" do
         post :create, :factor => valid_attributes
-        response.should redirect_to(Factor.last)
+        response.should redirect_to(Factor.last.decision)
       end
     end
 
@@ -113,10 +123,10 @@ describe FactorsController do
         assigns(:factor).should eq(factor)
       end
 
-      it "redirects to the factor" do
+      it "redirects to the decision" do
         factor = Factor.create! valid_attributes
         put :update, :id => factor.id, :factor => valid_attributes
-        response.should redirect_to(factor)
+        response.should redirect_to(factor.decision)
       end
     end
 
@@ -147,10 +157,10 @@ describe FactorsController do
       }.to change(Factor, :count).by(-1)
     end
 
-    it "redirects to the factors list" do
+    it "redirects to the decision" do
       factor = Factor.create! valid_attributes
       delete :destroy, :id => factor.id.to_s
-      response.should redirect_to(factors_url)
+      response.should redirect_to(factor.decision)
     end
   end
 

@@ -36,14 +36,14 @@ end
 gem 'devise'
 
 group :development do
-  gem 'rspec-rails', '2.6.1'
+  gem 'rspec-rails'
   gem 'sqlite3'
 end
 
 group :test do
   # Pretty printed test output
   gem 'turn', :require => false
-  gem 'rspec-rails', '2.6.1'
+  gem 'rspec-rails'
   gem 'sqlite3'
   gem 'webrat', '0.7.1'
 end
