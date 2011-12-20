@@ -14,10 +14,6 @@ class AlternativesController < ApplicationController
     end
   end
 
-  # GET /alternatives/1/edit
-  def edit
-  end
-
   # POST /alternatives
   # POST /alternatives.json
   def create

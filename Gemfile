@@ -45,6 +45,7 @@ group :test do
   gem 'turn', :require => false
   gem 'rspec-rails'
   gem 'sqlite3'
+  gem 'factory_girl'
   gem 'webrat', '0.7.1'
 end
 

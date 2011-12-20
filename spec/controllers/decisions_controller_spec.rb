@@ -4,7 +4,7 @@ describe DecisionsController do
 
   @incrementor = 0
 
-  # TODO: make the below stuff into fixtures?
+  # TODO: make the below stuff into fixtures, or better yet use factory_girl?
 
   valid_user_attributes = {
     username: 'dave',  # so it will be an admin so we don't have security hassles
@@ -41,6 +41,13 @@ describe DecisionsController do
   end
 
 
+
+  describe "GET index" do
+    it "works" do
+      get :index
+      response.status.should == 200
+    end
+  end
 
   describe "GET new" do
     it "assigns a new decision as @decision" do

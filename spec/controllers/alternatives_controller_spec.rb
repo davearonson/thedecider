@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe AlternativesController do
 
-  # TODO: make the below stuff into fixtures?
+  # TODO: make the below stuff into fixtures, or better yet use factory_girl?
 
   valid_user_attributes = {
     username: 'dave',  # so it will be an admin

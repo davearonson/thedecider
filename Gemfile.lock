@@ -48,6 +48,8 @@ GEM
     erubis (2.7.0)
     execjs (1.2.9)
       multi_json (~> 1.0)
+    factory_girl (2.3.2)
+      activesupport
     hike (1.2.1)
     i18n (0.6.0)
     jquery-rails (1.0.19)
@@ -139,6 +141,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-rails (~> 3.1.1)
   devise
+  factory_girl
   jquery-rails
   pg
   rails (= 3.1.1)
