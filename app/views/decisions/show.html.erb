@@ -1,4 +1,3 @@
-
 <% sorted_alts = @decision.alternatives.sort_by { |alt| -@percents[alt.id] } %>
 <% sorted_facts = @decision.factors.sort_by { |fact| -fact.weight } %>
 
@@ -134,4 +133,4 @@
 </table>
 
 
-<%= link_to 'Back to Decisions', decisions_path %>
+<div style="text-align: center"><%= link_to 'Back to Decisions', decisions_path %></div>

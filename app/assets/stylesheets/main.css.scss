@@ -1,0 +1,32 @@
+#author_links {
+  clear: both;
+  text-align: center;
+}
+
+#log_in_or_out_links {
+  clear: both;
+  text-align: center;
+}
+
+div#main {
+  background-color: blue;
+  color: white;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 75%;
+  min-width: 25%;
+  padding: 20px 40px 20px;
+  text-shadow: black 0.05em 0.05em 0.05em;
+}
+
+/* override normal link styles */
+div#main a { color: white; }
+div#main a:hover { color: green; }
+
+h1#title {
+  font-size: 4em;
+  text-align: center;
+  text-shadow: black 0.05em 0.05em 0.05em;
+}
