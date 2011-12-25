@@ -15,10 +15,15 @@ div#main {
   margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
-  max-width: 75%;
-  min-width: 25%;
   padding: 20px 40px 20px;
   text-shadow: black 0.05em 0.05em 0.05em;
+}
+
+/* note that this is INSIDE main */
+div#error_explanation {
+  color: red;
+  font-weight: bold;
+  text-shadow: none;
 }
 
 /* override normal link styles */

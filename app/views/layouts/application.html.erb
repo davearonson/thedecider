@@ -7,19 +7,25 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div id="main">
-    <%= render "devise/menu/devise_links" %>
-    <h1 id="title" comment="why doesn't this inherit the shadow?"><%= title %></h1>
-    <% if notice %><h2 class="notice"><%= notice %></h2><% end %>
-    <% if alert %><h2 class="alert"><%= alert %></h2><% end %>
-    <%= yield %>
-    <p>
-    <div id="author_links">
-      <%= link_to "Author's Main Web Site", 'http://www.davearonson.com/' %><br/>
-      Author's Blogs:
-      <%= link_to "Programming", 'http://www.codosaur.us/' %> |
-      <%= link_to "Personal Excellence", 'http://www.dare2xl.com/' %> |
-      <%= link_to "Recruiting Rants (NEW)", 'http://www.recruitingrants.com/' %>
+  <div id="container" comment="kluge to make centering on PAGE possible" style="float: right; position: relative; left: -50%">
+    <div id="main" style="float: left; position: relative; left: 50%;">
+      <%= render "devise/menu/devise_links" %>
+      <h1 id="title" comment="why doesn't this inherit the shadow?"><%= title %></h1>
+      <% if notice %><h2 class="notice"><%= notice %></h2><% end %>
+      <% if alert %><h2 class="alert"><%= alert %></h2><% end %>
+      <div id="inner_container" comment="kluge to make centering WITHIN the outer container possible" style="float: right; position: relative; left: -50%">
+        <div id="innerMOST_container" style="float: left; position: relative; left: 50%;">
+          <%= yield %>
+        </div>
+      </div>
+      <p>
+      <div id="author_links">
+        <%= link_to "Author's Main Web Site", 'http://www.davearonson.com/' %><br/>
+        Author's Blogs:<br/>
+        <%= link_to "Programming", 'http://www.codosaur.us/' %> |
+        <%= link_to "Personal Excellence", 'http://www.dare2xl.com/' %> |
+        <%= link_to "Recruiting Rants (NEW)", 'http://www.recruitingrants.com/' %>
+      </div>
     </div>
   </div>
 
