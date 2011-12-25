@@ -10,10 +10,13 @@
 
 body {
   background-image: url('Think_about_balance.png');
+  font-size: 12pt;
+  line-height: 1.5em;
+  text-shadow: black 0.05em 0.05em 0.05em;
 }
 
 div#main {
-  background-color: rgba(0, 0, 255, 0.9);
+  background-color: rgba(0, 0, 255, 0.96);
   border:2px solid;
   border-radius:25px;
   box-shadow: 10px 10px 5px gray;
@@ -23,7 +26,6 @@ div#main {
   margin-left: auto;
   margin-right: auto;
   padding: 20px 40px 20px;
-  text-shadow: black 0.05em 0.05em 0.05em;
 }
 
 /* note that this is INSIDE main */
@@ -37,8 +39,16 @@ div#error_explanation {
 div#main a { color: white; }
 div#main a:hover { color: green; }
 
-h1#title {
-  font-size: 4em;
+h1 {
   text-align: center;
-  text-shadow: black 0.05em 0.05em 0.05em;
+}
+
+p {
+  text-indent: 1em;
+}
+
+p, ol, ul, td {
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 1em;
+  line-height: 1.5em;
 }
