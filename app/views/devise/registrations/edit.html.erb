@@ -1,22 +1,25 @@
+<!-- TODO: figure out how to restrict it all to the textbox's width WITHOUT
+explicit linebreaks! -->
+
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div><%= f.label :realname %><br />
+  <div class="form_item"><%= f.label :realname %><br />
   <%= f.text_field :realname %></div>
 
-  <div><%= f.label :email %><br />
+  <div class="form_item"><%= f.label :email %><br />
   <%= f.email_field :email %></div>
 
-  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+  <div class="form_item"><%= f.label :password %> <i>(leave blank if you<br/>don't want to change it)</i><br />
   <%= f.password_field :password %></div>
 
-  <div><%= f.label :password_confirmation %><br />
+  <div class="form_item"><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
 
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+  <div class="form_item"><%= f.label :current_password %> <i>(we need<br/>your current password to<br/>confirm your changes)</i><br />
   <%= f.password_field :current_password %></div>
 
-  <div><%= f.submit "Update" %></div>
+  <div class="form_item"><%= f.submit "Update" %></div>
 <% end %>
 
 <h3>Cancel my account</h3>

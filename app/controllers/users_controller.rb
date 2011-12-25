@@ -3,6 +3,7 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    @title = 'Users'
     @users = User.all
 
     respond_to do |format|
@@ -19,6 +20,7 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    @title = User.username || User.email
     @user = User.find(params[:id])
     return if ! can_access @user
 
@@ -31,6 +33,7 @@ class UsersController < ApplicationController
   # GET /users/new
   # GET /users/new.json
   def new
+    @title = "Add User"
     @user = User.new
     return if ! can_access @user
 
@@ -42,6 +45,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+    @title = "Edit User"
     @user = User.find(params[:id])
     return if ! can_access @user
   end
@@ -49,6 +53,7 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
+    @title = "New User"
     @user = User.new(params[:user])
     return if ! can_access @user
 
@@ -67,6 +72,7 @@ class UsersController < ApplicationController
   # PUT /users/1
   # PUT /users/1.json
   def update
+    @title = "Edit User"
     @user = User.find(params[:id])
     return if ! can_access @user
 
@@ -85,6 +91,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    @title = "Delete User"
     @user = User.find(params[:id])
     return if ! can_access @user
     @user.destroy

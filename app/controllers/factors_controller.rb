@@ -5,6 +5,7 @@ class FactorsController < ApplicationController
   # GET /factors/new
   # GET /factors/new.json
   def new
+    @title = 'New Factor'
     @factor = Factor.new
     @factor.decision_id = params[:decision_id]
     return if ! can_access Decision.find @factor.decision_id
@@ -16,12 +17,14 @@ class FactorsController < ApplicationController
 
   # GET /factors/1/edit
   def edit
+    @title = 'Edit Factor'
     @factor = Factor.find(params[:id])
   end
 
   # POST /factors
   # POST /factors.json
   def create
+    @title = 'New Factor'
     @factor = Factor.new(params[:factor])
     respond_to do |format|
       if @factor && can_access(@factor) && @factor.save
@@ -38,6 +41,7 @@ class FactorsController < ApplicationController
   # PUT /factors/1
   # PUT /factors/1.json
   def update
+    @title = 'Edit Factor'
     respond_to do |format|
       if @factor.update_attributes(params[:factor])
         format.html { redirect_to @factor.decision,
@@ -53,6 +57,7 @@ class FactorsController < ApplicationController
   # DELETE /factors/1
   # DELETE /factors/1.json
   def destroy
+    @title = 'Delete Factor'
     @factor.destroy
 
     respond_to do |format|

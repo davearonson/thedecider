@@ -3,9 +3,12 @@
   text-align: center;
 }
 
+#site_title {
+  float: left;
+}
+
 #top_menu {
-  clear: both;
-  text-align: center;
+  float: right;
 }
 
 body {
@@ -13,6 +16,10 @@ body {
   font-size: 12pt;
   line-height: 1.5em;
   text-shadow: black 0.05em 0.05em 0.05em;
+}
+
+div.form_item {
+  margin: .6em;
 }
 
 div#main {
@@ -40,7 +47,9 @@ div#main a { color: white; }
 div#main a:hover { color: green; }
 
 h1 {
+  clear: both;
   text-align: center;
+  line-height: 2em;
 }
 
 p {

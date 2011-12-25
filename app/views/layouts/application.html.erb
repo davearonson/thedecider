@@ -9,6 +9,7 @@
 <body>
   <div id="container" comment="kluge to make centering on PAGE possible" style="float: right; position: relative; left: -50%; max-width: 80%">
     <div id="main" style="float: left; position: relative; left: 50%;">
+      <div id="site_title"><%= link_to 'The Decider', root_path %></div>
       <div id="top_menu">
         <% if user_signed_in? %>
           <%= link_to('Edit profile', edit_user_registration_path) %> |
@@ -19,7 +20,7 @@
         <% end %>
         | <%= link_to 'About', '/home/about' %>
       </div>
-      <h1 id="title" comment="why doesn't this inherit the shadow?"><%= title %></h1>
+      <h1><%= title %></h1>
       <% if notice %><h2 class="notice"><%= notice %></h2><% end %>
       <% if alert %><h2 class="alert"><%= alert %></h2><% end %>
       <div id="inner_container" comment="kluge to make centering WITHIN the outer container possible" style="float: right; position: relative; left: -50%">

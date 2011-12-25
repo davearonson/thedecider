@@ -73,6 +73,7 @@ class DecisionsController < ApplicationController
   # GET /decisions/new
   # GET /decisions/new.json
   def new
+    @title = 'New Decision'
     @decision = Decision.new
     @decision.user_id = current_user.id
     make_subparts
@@ -84,12 +85,14 @@ class DecisionsController < ApplicationController
 
   # GET /decisions/1/edit
   def edit
+    @title = 'Edit Decision'
     make_subparts
   end
 
   # POST /decisions
   # POST /decisions.json
   def create
+    @title = 'New Decision'
     @decision = Decision.new(params[:decision])
     respond_to do |format|
       if @decision.save
@@ -107,6 +110,7 @@ class DecisionsController < ApplicationController
   # PUT /decisions/1
   # PUT /decisions/1.json
   def update
+    @title = 'Edit Decision'
     respond_to do |format|
       if @decision.update_attributes(params[:decision])
         format.html { redirect_to @decision,
