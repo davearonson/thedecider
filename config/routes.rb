@@ -23,6 +23,7 @@ Thedecider::Application.routes.draw do
   resources :rankings
 
   get "home/welcome"
+  get "home/about"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -3,13 +3,20 @@
   text-align: center;
 }
 
-#log_in_or_out_links {
+#top_menu {
   clear: both;
   text-align: center;
 }
 
+body {
+  background-image: url('Think_about_balance.png');
+}
+
 div#main {
-  background-color: blue;
+  background-color: rgba(0, 0, 255, 0.9);
+  border:2px solid;
+  border-radius:25px;
+  box-shadow: 10px 10px 5px gray;
   color: white;
   margin-top: 20px;
   margin-bottom: 20px;
