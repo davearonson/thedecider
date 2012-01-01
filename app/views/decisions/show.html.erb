@@ -10,24 +10,7 @@
 <table align="center" border="1">
   <tr valign="top">
     <td>
-      <%= form_for @alternative do |f| %>
-        <% if @alternative.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@alternative.errors.count, "error") %>
-            prohibited this alternative from being saved:
-            </h2>
-            <ul>
-              <% @alternative.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <%= f.text_field :name %><br/>
-        <%= hidden_field(:alternative, :decision_id, value: @decision.id) %>
-        <%= f.submit "Add Alternative" %>
-      <% end %>
+      <%= link_to 'Add Alternative', new_alternative_path( :decision_id => @decision.id )  %>
     </td>
 
     <% sorted_alts.each do |alt| %>
@@ -96,31 +79,7 @@
   <% end %>
   <tr>
     <td>
-      
-      <%= form_for @factor do |f| %>
-        <% if @factor.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@factor.errors.count, "error") %>
-            prohibited this alternative from being saved:
-            </h2>
-            <ul>
-              <% @factor.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <%= f.text_field :name %><br/>
-        <%= collection_select(:factor, :weight_id,
-                              Level.weightNames, :id, :name, 
-                              selected: Level::Medium) %><%# TODO: WHY ISN'T PRESELECTION WORKING? %>
-        <%= hidden_field(:factor, :decision_id, value: @decision.id) %>
-        <%= f.submit "Add Factor" %>
-      <% end %>
-      
-      
-      
+      <%= link_to 'Add Factor', new_factor_path( :decision_id => @decision.id )  %>
     </td>
 
     <% sorted_alts.each do |alt| %>

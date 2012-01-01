@@ -7,18 +7,12 @@ class FactorsController < ApplicationController
   def new
     @title = 'New Factor'
     @factor = Factor.new
-    @factor.decision_id = params[:decision_id]
-    return if ! can_access Decision.find @factor.decision_id
+    @decision_id = params[:decision_id]
+    return if ! can_access Decision.find @decision_id
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @factor }
     end
-  end
-
-  # GET /factors/1/edit
-  def edit
-    @title = 'Edit Factor'
-    @factor = Factor.find(params[:id])
   end
 
   # POST /factors
@@ -26,6 +20,8 @@ class FactorsController < ApplicationController
   def create
     @title = 'New Factor'
     @factor = Factor.new(params[:factor])
+    @decision_id = params[:factor][:decision_id]
+    return if ! can_access Decision.find(@decision_id)
     respond_to do |format|
       if @factor && can_access(@factor) && @factor.save
         format.html { redirect_to @factor.decision,
@@ -42,6 +38,7 @@ class FactorsController < ApplicationController
   # PUT /factors/1.json
   def update
     @title = 'Edit Factor'
+    @decision_id = params[:factor][:decision_id]
     respond_to do |format|
       if @factor.update_attributes(params[:factor])
         format.html { redirect_to @factor.decision,

@@ -22,37 +22,4 @@
 
 <br />
 
-<%= form_for @decision do |f| %>
-
-  <% if @decision.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@decision.errors.count, "error") %>
-      prohibited this decision from being saved:</h2>
-
-      <ul>
-        <% @decision.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name %>
-  </div>
-
-  <% if @show_all %>
-    <div class="field">
-      <%= f.label :user %><br />
-      <%= collection_select(:decision, :user_id,
-                            User.all, :id, :username) %>
-    </div>
-  <% else %>
-    <%= hidden_field(:decision, :user_id, value: @user.id) %>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit 'Add Decision' %>
-  </div>
-<% end %>
+<%= link_to 'Add Decision', new_decision_path %>

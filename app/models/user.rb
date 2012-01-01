@@ -2,7 +2,11 @@ class User < ActiveRecord::Base
 
   has_many :decisions, :dependent => :destroy
 
-  validates_presence_of :name, :realname
+  validates :name, :length => { :minimum => 2, :maximum => 50 },
+            :presence => true, :uniqueness => true
+
+  validates :username, :length => { :minimum => 2, :maximum => 20 },
+            :presence => true
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable,
@@ -11,6 +15,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
+  # TODO: can we protect username?
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :username, :realname
 

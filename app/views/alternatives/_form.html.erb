@@ -16,7 +16,7 @@
     <%= f.text_field :name %>
   </div>
 
-  <%= hidden_field(:alternative, :decision_id, value: @alternative.decision.id) %>
+  <%= hidden_field(:alternative, :decision_id, value: @decision_id) %>
 
   <div class="actions">
     <%= f.submit %>

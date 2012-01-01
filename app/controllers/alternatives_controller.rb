@@ -7,8 +7,8 @@ class AlternativesController < ApplicationController
   def new
     @title = 'New Alternative'
     @alternative = Alternative.new
-    @alternative.decision_id = params[:decision_id]
-    return if ! can_access Decision.find @alternative.decision_id
+    @decision_id = params[:decision_id]
+    return if ! can_access Decision.find @decision_id
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @alternative }
@@ -20,6 +20,8 @@ class AlternativesController < ApplicationController
   def create
     @title = 'New Alternative'
     @alternative = Alternative.new(params[:alternative])
+    @decision_id = params[:alternative][:decision_id]
+    return if ! can_access Decision.find(@decision_id)
     respond_to do |format|
       if @alternative && can_access(@alternative) && @alternative.save
         format.html { redirect_to @alternative.decision,
@@ -36,6 +38,7 @@ class AlternativesController < ApplicationController
   # PUT /alternatives/1.json
   def update
     @title = 'Edit Alternative'
+    @decision_id = params[:alternative][:decision_id]
     respond_to do |format|
       if @alternative.update_attributes(params[:alternative])
         format.html { redirect_to @alternative.decision,

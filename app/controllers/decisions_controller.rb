@@ -8,7 +8,6 @@ class DecisionsController < ApplicationController
     @show_all = @user.is_admin?
     @decisions = @show_all ? Decision.all : current_user.decisions
     @title = "#{@user.is_admin? ? 'Everybody' : @user.username}'s Decisions"
-    @decision = Decision.new  # for the form, just in case
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @decisions }
@@ -61,8 +60,6 @@ class DecisionsController < ApplicationController
         @scores[alt.id] = Level::Medium
       end
     end
-    @alternative = Alternative.new
-    @factor = Factor.new
 
     respond_to do |format|
       format.html # show.html.erb
@@ -76,7 +73,7 @@ class DecisionsController < ApplicationController
     @title = 'New Decision'
     @decision = Decision.new
     @decision.user_id = current_user.id
-    make_subparts
+    @show_all = @user.is_admin?
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @decision }
@@ -86,7 +83,7 @@ class DecisionsController < ApplicationController
   # GET /decisions/1/edit
   def edit
     @title = 'Edit Decision'
-    make_subparts
+    @show_all = @user.is_admin?
   end
 
   # POST /decisions
@@ -94,6 +91,7 @@ class DecisionsController < ApplicationController
   def create
     @title = 'New Decision'
     @decision = Decision.new(params[:decision])
+    @show_all = @user.is_admin?
     respond_to do |format|
       if @decision.save
         format.html { redirect_to @decision,
@@ -147,14 +145,6 @@ class DecisionsController < ApplicationController
   def get_decision
     @decision = Decision.find params[:id]
     @decision = nil if ! can_access @decision
-  end
-
-  # since they are on the new/edit form we need them if we're creating or editing
-  def make_subparts
-    @alternative = Alternative.new
-    @alternative.decision_id = @decision.id
-    @factor = Factor.new
-    @factor.decision_id = @decision.id
   end
 
 end

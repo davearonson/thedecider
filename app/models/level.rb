@@ -1,3 +1,6 @@
+# TODO: make separate levels for factor weight & rating level?
+# TODO MAYBE: make size adjustable per user preference?
+
 class Level
 
   # ruby has no enums :-(
@@ -34,13 +37,13 @@ class Level
   end
 
   @@BadNames = [
-    new(Very_Low , 'Very_Good'),
+    new(Very_Low , 'Very Good'),
     new(Low      , 'Good'),
-    new(Semi_Low , 'Semi_Good'),
+    new(Semi_Low , 'Semi Good'),
     new(Medium   , 'Medium'),
-    new(Semi_High, 'Semi_Bad'),
+    new(Semi_High, 'Semi Bad'),
     new(High     , 'Bad'),
-    new(Very_High, 'Very_Bad')
+    new(Very_High, 'Very Bad')
   ]
 
   @@GoodColors = [
@@ -54,23 +57,23 @@ class Level
   ]
 
   @@GoodNames = [
-    new(Very_Low , 'Very_Bad'),
+    new(Very_Low , 'Very Bad'),
     new(Low      , 'Bad'),
-    new(Semi_Low , 'Semi_Bad'),
+    new(Semi_Low , 'Semi Bad'),
     new(Medium   , 'Medium'),
-    new(Semi_High, 'Semi_Good'),
+    new(Semi_High, 'Semi Good'),
     new(High     , 'Good'),
-    new(Very_High, 'Very_Good')
+    new(Very_High, 'Very Good')
   ]
 
   @@WeightNames = [
-    new(Very_Low , 'Very_Low'),
+    new(Very_Low , 'Very Low'),
     new(Low      , 'Low'),
-    new(Semi_Low , 'Semi_Low'),
+    new(Semi_Low , 'Semi Low'),
     new(Medium   , 'Medium'),
-    new(Semi_High, 'Semi_High'),
+    new(Semi_High, 'Semi High'),
     new(High     , 'High'),
-    new(Very_High, 'Very_High')
+    new(Very_High, 'Very High')
   ]
 
 end
