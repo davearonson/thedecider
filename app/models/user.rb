@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
 
   has_many :decisions, :dependent => :destroy
 
-  validates :name, :length => { :minimum => 2, :maximum => 50 },
+  validates :realname, :length => { :minimum => 2, :maximum => 50 },
             :presence => true, :uniqueness => true
 
   validates :username, :length => { :minimum => 2, :maximum => 20 },
@@ -11,6 +11,8 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
+  # TODO: rememberable doesn't seem to work; why?
+  # TODO MAYBE: can we make email NOT have to be unique?
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
