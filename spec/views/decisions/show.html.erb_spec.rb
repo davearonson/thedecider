@@ -10,7 +10,6 @@ describe "decisions/show.html.erb" do
       num += 1
       stub_model(Alternative, :id => num, :name => name, :decision_id => 0)
     }
-    puts alternatives.inspect
     @facs = [ ['they tried to kill daddy', Level::High],
               ['they attacked us', Level::Semi_High],
               ['they helped our enemies', Level::Medium],
@@ -19,7 +18,6 @@ describe "decisions/show.html.erb" do
       num += 1
       stub_model(Factor, :id => num, :name => fac[0], :weight_id => fac[1], :decision_id => 0)
     }
-    puts factors.inspect
     @decision = stub_model(Decision, :id => 0, :name => @decname, :user_id => 43
                            # argh, some factors can't be saved, why?
                            # , :alternatives => alternatives, :factors => factors
