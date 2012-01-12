@@ -41,15 +41,6 @@ describe AlternativesController do
     sign_in @user
   end
 
-
-  describe "GET edit" do
-    it "assigns the requested alternative as @alternative" do
-      alternative = Alternative.create! valid_attributes
-      get :edit, :id => alternative.id.to_s
-      assigns(:alternative).should eq(alternative)
-    end
-  end
-
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Alternative" do
@@ -66,7 +57,7 @@ describe AlternativesController do
 
       it "redirects to the created alternative's decision" do
         post :create, :alternative => valid_attributes
-        response.should redirect_to(Decision.find valid_attributes[:decision_id])
+        response.should redirect_to edit_decision_path(valid_attributes[:decision_id])
       end
     end
 

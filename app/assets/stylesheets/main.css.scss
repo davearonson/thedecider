@@ -13,7 +13,7 @@
 
 body {
   background-image: url('Think_about_balance.png');
-  font-size: 12pt;
+  font-size: 14pt;
   line-height: 1.5em;
   text-shadow: black 0.05em 0.05em 0.05em;
 }
@@ -28,11 +28,11 @@ div#main {
   border-radius: 2em;
   box-shadow: .5em .5em 1em black;
   color: white;
-  margin-top: 2em;
+  margin-top: .5em;
   margin-bottom: 2em;
   margin-left: auto;
   margin-right: auto;
-  padding: 2em 4em 2em;
+  padding: .5em 2em 0;
 }
 
 /* note that this is INSIDE main */
@@ -49,7 +49,14 @@ div#main a:hover { color: green; }
 h1 {
   clear: both;
   text-align: center;
-  line-height: 2em;
+}
+
+img#balance_on_welcome {
+  border-radius: 18px;
+  float: right;
+  margin-bottom: 1em;
+  margin-left: 1em;
+  vertical-align: top;
 }
 
 p {

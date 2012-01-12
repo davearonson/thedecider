@@ -10,7 +10,7 @@
 
 <% @decisions.each do |decision| %>
   <tr>
-    <td><%= link_to decision.name, decision %></td>
+    <td><%= link_to decision.name, edit_decision_path(decision) %></td>
     <% if @show_all %>
       <td><%= decision.user ? decision.user.username : "ERROR: NO USER" %></td>
     <% end %>

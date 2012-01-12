@@ -1,6 +1,6 @@
 class FactorsController < ApplicationController
 
-  before_filter :get_factor, except: [ :new, :create ]
+  # TODO: make these not needed, by putting form for new one on page!
 
   # GET /factors/new
   # GET /factors/new.json
@@ -24,7 +24,7 @@ class FactorsController < ApplicationController
     return if ! can_access Decision.find(@decision_id)
     respond_to do |format|
       if @factor && can_access(@factor) && @factor.save
-        format.html { redirect_to @factor.decision,
+        format.html { redirect_to edit_decision_path(@decision_id),
                                   notice: 'Factor was successfully created.' }
         format.json { render json: @factor, status: :created, location: @factor }
       else
@@ -32,49 +32,6 @@ class FactorsController < ApplicationController
         format.json { render json: @factor.errors, status: :unprocessable_entity }
       end
     end
-  end
-
-  # PUT /factors/1
-  # PUT /factors/1.json
-  def update
-    @title = 'Edit Factor'
-    @decision_id = params[:factor][:decision_id]
-    respond_to do |format|
-      if @factor.update_attributes(params[:factor])
-        format.html { redirect_to @factor.decision,
-                                  notice: 'Factor was successfully updated.' }
-        format.json { head :ok }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @factor.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /factors/1
-  # DELETE /factors/1.json
-  def destroy
-    @title = 'Delete Factor'
-    @factor.destroy
-
-    respond_to do |format|
-      format.html { redirect_to @factor.decision,
-                    notice: 'Factor was successfully removed.' }
-      format.json { head :ok }
-    end
-  end
-
-  ##############################
-  ##                          ##
-  ##  PRIVATE METHODS BELOW!  ##
-  ##                          ##
-  ##############################
-
-  private
-
-  def get_factor
-    @factor = Factor.find params[:id]
-    @factor = nil if ! can_access @factor
   end
 
 end

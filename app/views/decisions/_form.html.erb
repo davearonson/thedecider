@@ -1,41 +1,87 @@
-<table>
+<% set_decision_edit_view_stuff %>
+<% sorted_alts = @decision.alternatives.sort_by { |alt| -@percents[alt.id] } %>
+<% sorted_facts = @decision.factors.sort_by { |fact| -fact.weight } %>
 
-  <tr>
-    <td align="center" colspan="2">
-
-      <%= form_for @decision do |f| %>
-        <% if @decision.errors.any? %>
-          <div id="error_explanation">
-            <h2><%= pluralize(@decision.errors.count, "error") %>
-            prohibited this decision from being saved:</h2>
-
-            <ul>
-              <% @decision.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-              <% end %>
-            </ul>
-          </div>
-        <% end %>
-
-        <div class="field">
-          <%= f.label :name %><br />
-          <%= f.text_field :name %>
-        </div>
-
-        <% if @show_all %>
-          <div class="field">
-            <%= f.label :user %><br />
-            <%= collection_select(:decision, :user_id,
-                                  User.all, :id, :username) %>
-          </div>
-        <% else %>
-          <%= hidden_field(:decision, :user_id, value: @user.id) %>
-        <% end %>
-
-        <div class="actions">
-          <%= f.submit %>
-        </div>
+<% if @decision.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(@decision.errors.count, "error") %>
+    prohibited this decision from being saved:
+    </h2>
+    <ul>
+      <% @decision.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
       <% end %>
-    </td>
-  </tr>
-</table>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_for @decision do |decform| %>
+
+  <div align="center">
+    <%= decform.label :name, style: "font-size: 1.5em" %>:
+    <%= decform.text_field :name, style: "font-size: 1.5em" %>
+    <% if @user.is_admin? && @decision.user_id != @user.id %>
+      (from <%= @decision.user.username %>)
+    <% end %>
+    <br/>
+  </div>
+
+  <p/>
+  <table align="center" border="1">
+    <tr valign="top">
+      <td>
+        <%= link_to 'Add Alternative',
+            new_alternative_path( :decision_id => @decision.id )  %>
+      </td>
+
+      <%= decform.fields_for :alternatives, sorted_alts do |altform| %>
+        <td bgcolor="<%#= Level.goodColors[@scores[alt.id]].name %>" >
+          <%= altform.text_field :name, size: 10 %><br/>
+          <%= altform.check_box :_destroy %>
+          <%= altform.label :_destroy, 'Remove' %>
+        </td>
+      <% end %>
+
+    </tr>
+
+    <%= decform.fields_for :factors, sorted_facts do |facform| %>
+      <tr>
+        <td>
+          <%= facform.text_field :name %><br/>
+          <%= facform.collection_select(:weight_id,
+                                        Level.weightNames, :id, :name,
+                                        { selected: facform.object.weight } ) %>
+          <%= facform.check_box '_destroy' %>
+          <%= facform.label '_delete', 'Remove' %>
+        </td>
+        <% sorted_alts.each do |alt| %>
+          <% rank = @rankings[[alt.id,facform.object.id]] %>
+          <td bgcolor="<%= Level.goodColors[rank.weight - 1].name %>">
+            <%= decform.fields_for :rankings, rank do |rankform| %>
+              <%= rankform.collection_select(:weight_id,
+                                             Level.goodNames, :id, :name,
+                                             { selected: rank.weight }) %>
+            <% end %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+
+    <tr>
+      <td valign="top">
+        <%= link_to 'Add Factor',
+                    new_factor_path( :decision_id => @decision.id )  %>
+      </td>
+
+      <% sorted_alts.each do |alt| %>
+        <td bgcolor="<%= Level.goodColors[@scores[alt.id]].name %>">
+          <b><big><%= Level.goodNames[@scores[alt.id]].name %></big></b><br/>
+          (<%= number_to_percentage @percents[alt.id], precision: 0 %>)
+        </td>
+      <% end %>
+    </tr>
+  </table>
+  <div align="center"><%= decform.submit "Update" %></div>
+<% end %>
+
+<div style="text-align: center"><%= link_to 'Back to Decisions', decisions_path %></div>
