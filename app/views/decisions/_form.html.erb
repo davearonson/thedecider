@@ -18,8 +18,8 @@
 <%= form_for @decision do |decform| %>
 
   <div align="center">
-    <%= decform.label :name, style: "font-size: 1.5em" %>:
-    <%= decform.text_field :name, style: "font-size: 1.5em" %>
+    <%= decform.label :name, style: "font-size: 1.25em" %>:
+    <%= decform.text_field :name, style: "font-size: 1.25em" %>
     <% if @user.is_admin? && @decision.user_id != @user.id %>
       (from <%= @decision.user.username %>)
     <% end %>
@@ -30,15 +30,20 @@
   <table align="center" border="1">
     <tr valign="top">
       <td>
-        <%= link_to 'Add Alternative',
-            new_alternative_path( :decision_id => @decision.id )  %>
+        <%= link_to 'Add Alternative (column)',
+            new_alternative_path( :decision_id => @decision.id ),
+            style: 'font-size: .8em' %>
+        <br/>
+        <%= link_to 'Add Factor (row)',
+            new_factor_path( :decision_id => @decision.id ),
+            style: 'font-size: .8em'  %>
       </td>
 
       <%= decform.fields_for :alternatives, sorted_alts do |altform| %>
         <td bgcolor="<%#= Level.goodColors[@scores[alt.id]].name %>" >
           <%= altform.text_field :name, size: 10 %><br/>
+          <%= altform.label :_destroy, 'Remove', style: 'font-size: .5em' %>
           <%= altform.check_box :_destroy %>
-          <%= altform.label :_destroy, 'Remove' %>
         </td>
       <% end %>
 
@@ -47,12 +52,13 @@
     <%= decform.fields_for :factors, sorted_facts do |facform| %>
       <tr>
         <td>
-          <%= facform.text_field :name %><br/>
+          <%= facform.text_field :name,
+              size: '20' %><br/>
           <%= facform.collection_select(:weight_id,
                                         Level.weightNames, :id, :name,
                                         { selected: facform.object.weight } ) %>
+          <%= facform.label :_destroy, 'Remove', style: 'font-size: .5em' %>
           <%= facform.check_box '_destroy' %>
-          <%= facform.label '_delete', 'Remove' %>
         </td>
         <% sorted_alts.each do |alt| %>
           <% rank = @rankings[[alt.id,facform.object.id]] %>
@@ -68,14 +74,12 @@
     <% end %>
 
     <tr>
-      <td valign="top">
-        <%= link_to 'Add Factor',
-                    new_factor_path( :decision_id => @decision.id )  %>
+      <td>
       </td>
 
       <% sorted_alts.each do |alt| %>
         <td bgcolor="<%= Level.goodColors[@scores[alt.id]].name %>">
-          <b><big><%= Level.goodNames[@scores[alt.id]].name %></big></b><br/>
+          <b><%= Level.goodNames[@scores[alt.id]].name %></b><br/>
           (<%= number_to_percentage @percents[alt.id], precision: 0 %>)
         </td>
       <% end %>
