@@ -41,6 +41,11 @@ describe AlternativesController do
     sign_in @user
   end
 
+  # since alts are now part of form, there is no
+  # edit in controller, only new/create!
+  # describe "GET edit" do
+  # end
+
   describe "POST create" do
     describe "with valid params" do
       it "creates a new Alternative" do
@@ -63,7 +68,7 @@ describe AlternativesController do
 
     describe "with invalid params" do
       it "doesn't create a new alternative" do
-        pending "need to catch the exception here"
+        pending "need to rearrange this; currently can't find a decision w/o an id"
         # Trigger the behavior that occurs when invalid params are submitted
         Alternative.any_instance.stub(:save).and_return(false)
         post :create, :alternative => {}
@@ -71,7 +76,7 @@ describe AlternativesController do
       end
 
       it "re-renders the 'new' template" do
-        pending "need to catch the exception here, and/or in the actual code"
+        pending "need to rearrange this; currently can't find a decision w/o an id"
         # Trigger the behavior that occurs when invalid params are submitted
         Alternative.any_instance.stub(:save).and_return(false)
         post :create, :alternative => {}
@@ -80,63 +85,14 @@ describe AlternativesController do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested alternative" do
-        alternative = Alternative.create! valid_attributes
-        # Assuming there are no other alternatives in the database, this
-        # specifies that the Alternative created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Alternative.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => alternative.id, :alternative => {'these' => 'params'}
-      end
+  # since alts are now part of form, there is no
+  # update in controller, only new/create!
+  # describe "PUT update" do
+  # end
 
-      it "assigns the requested alternative as @alternative" do
-        alternative = Alternative.create! valid_attributes
-        put :update, :id => alternative.id, :alternative => valid_attributes
-        assigns(:alternative).should eq(alternative)
-      end
-
-      it "redirects to the decision" do
-        alternative = Alternative.create! valid_attributes
-        put :update, :id => alternative.id, :alternative => valid_attributes
-        response.should redirect_to(alternative.decision)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the alternative as @alternative" do
-        alternative = Alternative.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Alternative.any_instance.stub(:save).and_return(false)
-        put :update, :id => alternative.id.to_s, :alternative => {}
-        assigns(:alternative).should eq(alternative)
-      end
-
-      it "re-renders the 'edit' template" do
-        alternative = Alternative.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Alternative.any_instance.stub(:save).and_return(false)
-        put :update, :id => alternative.id.to_s, :alternative => {}
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested alternative" do
-      alternative = Alternative.create! valid_attributes
-      expect {
-        delete :destroy, :id => alternative.id.to_s
-      }.to change(Alternative, :count).by(-1)
-    end
-
-    it "redirects to the decision" do
-      alternative = Alternative.create! valid_attributes
-      delete :destroy, :id => alternative.id.to_s
-      response.should redirect_to(alternative.decision)
-    end
-  end
+  # since alts are now part of form, there is no
+  # delete in controller, only new/create!
+  # describe "DELETE destroy" do
+  # end
 
 end

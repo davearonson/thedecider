@@ -60,13 +60,10 @@ describe FactorsController do
     sign_in @user
   end
 
-  describe "GET edit" do
-    it "assigns the requested factor as @factor" do
-      factor = Factor.create! valid_attributes
-      get :edit, :id => factor.id.to_s
-      assigns(:factor).should eq(factor)
-    end
-  end
+  # since factors are now part of form, there is no
+  # edit in controller, only new/create!
+  # describe "GET edit" do
+  # end
 
   describe "POST create" do
     describe "with valid params" do
@@ -84,7 +81,7 @@ describe FactorsController do
 
       it "redirects to the decision" do
         post :create, :factor => valid_attributes
-        response.should redirect_to(Factor.last.decision)
+        response.should redirect_to( edit_decision_path( Factor.last.decision ))
       end
     end
 
@@ -107,63 +104,14 @@ describe FactorsController do
     end
   end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested factor" do
-        factor = Factor.create! valid_attributes
-        # Assuming there are no other factors in the database, this
-        # specifies that the Factor created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Factor.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, :id => factor.id, :factor => {'these' => 'params'}
-      end
+  # since factors are now part of form, there is no
+  # update in controller, only new/create!
+  # describe "PUT update" do
+  # end
 
-      it "assigns the requested factor as @factor" do
-        factor = Factor.create! valid_attributes
-        put :update, :id => factor.id, :factor => valid_attributes
-        assigns(:factor).should eq(factor)
-      end
-
-      it "redirects to the decision" do
-        factor = Factor.create! valid_attributes
-        put :update, :id => factor.id, :factor => valid_attributes
-        response.should redirect_to(factor.decision)
-      end
-    end
-
-    describe "with invalid params" do
-      it "assigns the factor as @factor" do
-        factor = Factor.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Factor.any_instance.stub(:save).and_return(false)
-        put :update, :id => factor.id.to_s, :factor => {}
-        assigns(:factor).should eq(factor)
-      end
-
-      it "re-renders the 'edit' template" do
-        factor = Factor.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Factor.any_instance.stub(:save).and_return(false)
-        put :update, :id => factor.id.to_s, :factor => {}
-        response.should render_template("edit")
-      end
-    end
-  end
-
-  describe "DELETE destroy" do
-    it "destroys the requested factor" do
-      factor = Factor.create! valid_attributes
-      expect {
-        delete :destroy, :id => factor.id.to_s
-      }.to change(Factor, :count).by(-1)
-    end
-
-    it "redirects to the decision" do
-      factor = Factor.create! valid_attributes
-      delete :destroy, :id => factor.id.to_s
-      response.should redirect_to(factor.decision)
-    end
-  end
+  # since factors are now part of form, there is no
+  # delete in controller, only new/create!
+  # describe "DELETE destroy" do
+  # end
 
 end

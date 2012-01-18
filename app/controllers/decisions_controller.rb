@@ -27,7 +27,6 @@ class DecisionsController < ApplicationController
     @title = 'New Decision'
     @decision = Decision.new
     @show_all = @user.is_admin?
-    puts "NEW decision User = #{@decision.user.inspect}"
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @decision }
@@ -36,7 +35,6 @@ class DecisionsController < ApplicationController
 
   # GET /decisions/1/edit
   def edit
-    puts "EDITING  decision User = #{@decision.user.inspect}"
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @decision }
@@ -50,15 +48,12 @@ class DecisionsController < ApplicationController
     @decision = Decision.new(params[:decision])
     @decision.user_id = current_user.id
     @show_all = @user.is_admin?
-    puts "CREATING decision User = #{@decision.user.inspect}"
     respond_to do |format|
       if @decision.save
-        puts "\n\n\nSAVED #{@decision.inspect}\n\n\n"
         format.html { redirect_to edit_decision_path(@decision),
                       notice: 'Decision was successfully created.' }
         format.json { render json: @decision, status: :created, location: @decision }
       else
-        puts "\n\n\nERRORED #{@decision.inspect}\n\n\n"
         format.html { render action: "new" }
         format.json { render json: @decision.errors,
                       status: :unprocessable_entity }

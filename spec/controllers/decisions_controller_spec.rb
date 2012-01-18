@@ -80,7 +80,7 @@ describe DecisionsController do
 
       it "redirects to the created decision" do
         post :create, :decision => valid_attributes
-        response.should redirect_to(Decision.last)
+        response.should redirect_to( edit_decision_path( Decision.last ))
       end
     end
 
@@ -122,7 +122,7 @@ describe DecisionsController do
       it "redirects to the decision" do
         decision = Decision.create! valid_attributes
         put :update, :id => decision.id, :decision => valid_attributes
-        response.should redirect_to(decision)
+        response.should redirect_to( edit_decision_path( decision ))
       end
     end
 
