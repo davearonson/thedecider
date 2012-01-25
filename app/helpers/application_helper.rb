@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def can_access obj
-    if obj && (obj.user_id == current_user.id || current_user.is_admin?)
+    if obj && current_user && ( obj.user_id == current_user.id || current_user.is_admin? )
       true
     else
       respond_to do |format|

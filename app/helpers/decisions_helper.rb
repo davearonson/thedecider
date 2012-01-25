@@ -1,7 +1,7 @@
 module DecisionsHelper
-  def set_decision_edit_view_stuff
+  def set_decision_view_stuff
     @title = 'Edit Decision'
-    @show_all = @user.is_admin?
+    @show_all = @user && @user.is_admin?
     max = 0
     tmp_ranks = Ranking.where(factor_id: @decision.factors.map(&:id)).
                         where(alternative_id: @decision.alternatives.map(&:id))

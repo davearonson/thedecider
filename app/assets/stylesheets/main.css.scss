@@ -68,3 +68,12 @@ p, ol, ul, td {
   font-size: 1em;
   line-height: 1.5em;
 }
+
+td {
+  padding: 0.5em;
+}
+
+td#rating {
+  font-weight: bold;
+  text-shadow: black 0.2em 0.2em 0.2em;
+}

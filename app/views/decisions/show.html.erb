@@ -1,0 +1,56 @@
+<%# TODO: DRY this with _form! %>
+<% set_decision_view_stuff %>
+<% sorted_alts = @decision.alternatives.sort_by { |alt| -@percents[alt.id] } %>
+<% sorted_facts = @decision.factors.sort_by { |fact| -fact.weight } %>
+
+<div style="text-align: center">
+  <div style="font-size: 1.5em">
+    <%= @decision.name %>
+  </div>
+  <% if @user.nil? || @user.id != @decision.user_id %>
+    (author: <%= @decision.user.username %>)
+  <% end %>
+</div>
+
+<p/>
+<table align="center" border="1">
+  <tr valign="top">
+    <td></td>
+
+    <% sorted_alts.each do |alt| %>
+      <td bgcolor="<%#= Level.goodColors[@scores[alt.id]].name %>" >
+        <%= alt.name %>
+      </td>
+    <% end %>
+
+  </tr>
+
+  <% sorted_facts.each do |fac| %>
+    <tr>
+      <td>
+        <%= fac.name %><br/>
+        <div style="font-size: 0.75em">
+          (Weight: <%= Level.weightNames[fac.weight_id-1].name %>)
+        </div>
+      </td>
+      <% sorted_alts.each do |alt| %>
+        <% rank = @rankings[[alt.id,fac.id]] %>
+        <td bgcolor="<%= Level.goodColors[rank.weight-1].name %>">
+          <%= Level.goodNames[rank.weight-1].name %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+
+  <tr>
+    <td>
+    </td>
+
+    <% sorted_alts.each do |alt| %>
+      <td class="rating" bgcolor="<%= Level.goodColors[@scores[alt.id]].name %>">
+        <b><%= Level.goodNames[@scores[alt.id]].name %></b><br/>
+        (<%= number_to_percentage @percents[alt.id], precision: 0 %>)
+      </td>
+    <% end %>
+  </tr>
+</table>

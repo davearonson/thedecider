@@ -16,7 +16,7 @@ class DecisionsController < ApplicationController
 
   def show
     respond_to do |format|
-      format.html { render action: :edit }
+      format.html
       format.json { render json: @decision }
     end
   end
@@ -100,7 +100,8 @@ class DecisionsController < ApplicationController
 
   def get_decision
     @decision = Decision.find params[:id], include: [ :alternatives, :factors, :rankings ]
-    @decision = nil if ! can_access @decision
+    # ORDER IS IMPORTANT!  If current_user is nil and we get to can_access, it will redirect.
+    @decision = nil unless @decision.nil? || (@decision.public? && params[:action] == 'show') || can_access(@decision)
   end
 
 end

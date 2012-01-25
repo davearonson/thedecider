@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
             :presence => true, :uniqueness => true
 
   validates :username, :length => { :minimum => 2, :maximum => 20 },
-            :presence => true
+            :presence => true, :uniqueness => true
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :encryptable, :confirmable,
@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   attr_accessible :username, :realname
 
   def is_admin?
-    result = username == 'dave'
+    username == 'dave'
   end
 
   def user_id

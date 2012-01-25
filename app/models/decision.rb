@@ -21,4 +21,6 @@ class Decision < ActiveRecord::Base
             :presence => true,
             :uniqueness => true
 
+  attr_accessible :public
+
 end

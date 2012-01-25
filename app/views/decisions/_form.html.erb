@@ -1,4 +1,5 @@
-<% set_decision_edit_view_stuff %>
+<%# TODO: DRY this with show! %>
+<% set_decision_view_stuff %>
 <% sorted_alts = @decision.alternatives.sort_by { |alt| -@percents[alt.id] } %>
 <% sorted_facts = @decision.factors.sort_by { |fact| -fact.weight } %>
 
@@ -20,9 +21,11 @@
   <div align="center">
     <%= decform.label :name, style: "font-size: 1.25em" %>:
     <%= decform.text_field :name, style: "font-size: 1.25em" %>
-    <% if @user.is_admin? && @decision.user_id != @user.id %>
-      (from <%= @decision.user.username %>)
+    <%# won't have a user_id on #new! %>
+    <% if @user.is_admin? && @decision.user_id && @decision.user_id != @user.id %>
+      <br/>(from <%= @decision.user.username %>)
     <% end %>
+    <br/><%= decform.label :public? %>: <%= decform.check_box :public? %>
     <br/>
   </div>
 
