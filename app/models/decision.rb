@@ -23,6 +23,7 @@ class Decision < ActiveRecord::Base
 
   attr_accessible :public
 
+  # hmmm, maybe this is redundant?
   def public?
     @public
   end
