@@ -23,4 +23,8 @@ class Decision < ActiveRecord::Base
 
   attr_accessible :public
 
+  def public?
+    @public
+  end
+
 end
