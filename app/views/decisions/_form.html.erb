@@ -43,8 +43,8 @@
       </td>
 
       <%= decform.fields_for :alternatives, sorted_alts do |altform| %>
-        <td bgcolor="<%#= Level.goodColors[@scores[alt.id]].name %>" >
-          <%= altform.text_field :name, size: 10 %><br/>
+        <td>
+          <%= altform.text_field :name, class: 'attr_field', size: 10 %><br/>
           <%= altform.label :_destroy, 'Remove', class: 'remove_item_label' %>
           <%= altform.check_box :_destroy %>
         </td>
@@ -55,8 +55,7 @@
     <%= decform.fields_for :factors, sorted_facts do |facform| %>
       <tr>
         <td>
-          <%= facform.text_field :name,
-              size: '20' %><br/>
+          <%= facform.text_field :name, class: 'attr_field', size: '20' %><br/>
           <%= facform.collection_select(:weight_id,
                                         Level.weightNames, :id, :name,
                                         { selected: facform.object.weight } ) %>
@@ -69,7 +68,7 @@
             <%= decform.fields_for :rankings, rank do |rankform| %>
               <%= rankform.collection_select(:weight_id,
                                              Level.goodNames, :id, :name,
-                                             { selected: rank.weight }) %>
+                                             selected: rank.weight) %>
             <% end %>
           </td>
         <% end %>
@@ -81,8 +80,9 @@
       </td>
 
       <% sorted_alts.each do |alt| %>
-        <td bgcolor="<%= Level.goodColors[@scores[alt.id]].name %>">
-          <b><%= Level.goodNames[@scores[alt.id]].name %></b><br/>
+        <td bgcolor="<%= Level.goodColors[@scores[alt.id]].name %>"
+            class="rating">
+          <%= Level.goodNames[@scores[alt.id]].name %><br/>
           (<%= number_to_percentage @percents[alt.id], precision: 0 %>)
         </td>
       <% end %>

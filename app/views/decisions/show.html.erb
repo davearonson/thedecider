@@ -35,7 +35,7 @@
       </td>
       <% sorted_alts.each do |alt| %>
         <% rank = @rankings[[alt.id,fac.id]] %>
-        <td bgcolor="<%= Level.goodColors[rank.weight-1].name %>">
+        <td bgcolor="<%= Level.goodColors[rank.weight-1].name %>" class="rating">
           <%= Level.goodNames[rank.weight-1].name %>
         </td>
       <% end %>
@@ -48,7 +48,7 @@
 
     <% sorted_alts.each do |alt| %>
       <td class="rating" bgcolor="<%= Level.goodColors[@scores[alt.id]].name %>">
-        <b><%= Level.goodNames[@scores[alt.id]].name %></b><br/>
+        <%= Level.goodNames[@scores[alt.id]].name %><br/>
         (<%= number_to_percentage @percents[alt.id], precision: 0 %>)
       </td>
     <% end %>
