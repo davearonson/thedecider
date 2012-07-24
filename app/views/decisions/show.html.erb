@@ -3,14 +3,10 @@
 <% sorted_alts = @decision.alternatives.sort_by { |alt| -@percents[alt.id] } %>
 <% sorted_facts = @decision.factors.sort_by { |fact| -fact.weight } %>
 
-<div id="name">
-  <div class="name">
-    <%= @decision.name %>
-  </div>
-  <% if @user.nil? || @user.id != @decision.user_id %>
-    (author: <%= @decision.user.username %>)
-  <% end %>
-</div>
+<%# decision name is already in title %>
+<% if @user.nil? || @user.id != @decision.user_id %>
+  <div id="author">(author: <%= @decision.user.username %>)</div>
+<% end %>
 
 <p/>
 <table align="center" border="1">
@@ -43,8 +39,7 @@
   <% end %>
 
   <tr>
-    <td>
-    </td>
+    <td>Results:</td>
 
     <% sorted_alts.each do |alt| %>
       <td class="rating" bgcolor="<%= Level.goodColors[@scores[alt.id]].name %>">

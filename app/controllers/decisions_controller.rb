@@ -15,6 +15,7 @@ class DecisionsController < ApplicationController
   end
 
   def show
+    @title = @decision.name
     respond_to do |format|
       format.html
       format.json { render json: @decision }
@@ -35,6 +36,7 @@ class DecisionsController < ApplicationController
 
   # GET /decisions/1/edit
   def edit
+    @title = 'Edit Decision'
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @decision }
@@ -64,13 +66,13 @@ class DecisionsController < ApplicationController
   # PUT /decisions/1
   # PUT /decisions/1.json
   def update
+    @title = 'Edit Decision'
     respond_to do |format|
       if @decision.update_attributes(params[:decision])
         format.html { redirect_to edit_decision_path(@decision),
                       notice: 'Decision was successfully updated.' }
         format.json { head :ok }
       else
-        @title = 'Edit Decision'
         format.html { render action: :edit }
         format.json { render json: @decision.errors, status: :unprocessable_entity }
       end
