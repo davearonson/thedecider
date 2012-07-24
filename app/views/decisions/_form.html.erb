@@ -19,8 +19,8 @@
 <%= form_for @decision do |decform| %>
 
   <div align="center">
-    <%= decform.label :name, style: "font-size: 1.25em" %>:
-    <%= decform.text_field :name, style: "font-size: 1.25em" %>
+    <%= decform.label :name, class: 'attr_label' %>:
+    <%= decform.text_field :name, class: 'attr_field' %>
     <%# won't have a user_id on #new! %>
     <% if @user.is_admin? && @decision.user_id && @decision.user_id != @user.id %>
       <br/>(from <%= @decision.user.username %>)
@@ -35,17 +35,17 @@
       <td>
         <%= link_to 'Add Alternative (column)',
             new_alternative_path( :decision_id => @decision.id ),
-            style: 'font-size: .8em' %>
+            class: 'add_item_link' %>
         <br/>
         <%= link_to 'Add Factor (row)',
             new_factor_path( :decision_id => @decision.id ),
-            style: 'font-size: .8em'  %>
+            class: 'add_item_link'  %>
       </td>
 
       <%= decform.fields_for :alternatives, sorted_alts do |altform| %>
         <td bgcolor="<%#= Level.goodColors[@scores[alt.id]].name %>" >
           <%= altform.text_field :name, size: 10 %><br/>
-          <%= altform.label :_destroy, 'Remove', style: 'font-size: .5em' %>
+          <%= altform.label :_destroy, 'Remove', class: 'remove_item_label' %>
           <%= altform.check_box :_destroy %>
         </td>
       <% end %>
@@ -60,7 +60,7 @@
           <%= facform.collection_select(:weight_id,
                                         Level.weightNames, :id, :name,
                                         { selected: facform.object.weight } ) %>
-          <%= facform.label :_destroy, 'Remove', style: 'font-size: .5em' %>
+          <%= facform.label :_destroy, 'Remove', class: 'remove_item_label' %>
           <%= facform.check_box '_destroy' %>
         </td>
         <% sorted_alts.each do |alt| %>
@@ -91,4 +91,4 @@
   <div align="center"><%= decform.submit '   Save   ', disable_with: 'Saving....' %></div>
 <% end %>
 
-<div style="text-align: center"><%= link_to 'Back to Decisions', decisions_path %></div>
+<div id="back_link"><%= link_to 'Back to Decisions', decisions_path %></div>

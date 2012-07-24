@@ -1,3 +1,15 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#balance_on_welcome {
+  border-radius: 18px;
+  float: right;
+  margin-bottom: 1em;
+  margin-left: 1em;
+  vertical-align: top;
+}
+
+// list of planned features;
+// we need to adjust the position
+#planned_feature_list { list-style-position: inside }

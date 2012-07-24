@@ -3,8 +3,8 @@
 <% sorted_alts = @decision.alternatives.sort_by { |alt| -@percents[alt.id] } %>
 <% sorted_facts = @decision.factors.sort_by { |fact| -fact.weight } %>
 
-<div style="text-align: center">
-  <div style="font-size: 1.5em">
+<div id="name">
+  <div class="name">
     <%= @decision.name %>
   </div>
   <% if @user.nil? || @user.id != @decision.user_id %>
@@ -29,7 +29,7 @@
     <tr>
       <td>
         <%= fac.name %><br/>
-        <div style="font-size: 0.75em">
+        <div class="weight">
           (Weight: <%= Level.weightNames[fac.weight_id-1].name %>)
         </div>
       </td>
