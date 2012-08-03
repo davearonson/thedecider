@@ -4,3 +4,6 @@ You thought George W. Bush was The Decider?  No, THIS is The Decider!  This is
 a tool that will help you make decisions rationally.  It does this by comparing
 decisions based on what aspects you consider important, and how well each
 option rates in those aspects.
+
+You can see it in action at http://TheDecider.herokuapp.com/.  (It doesn't get
+a lot of use, so please be patient while it "spins up".)
