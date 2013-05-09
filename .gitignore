@@ -5,3 +5,4 @@ tmp/
 .sass-cache/
 .redcar/
 vendor/ruby
+vendor/cache
